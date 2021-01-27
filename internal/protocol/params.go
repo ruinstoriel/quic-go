@@ -12,7 +12,7 @@ const MaxPacketSizeIPv4 = 1252
 const MaxPacketSizeIPv6 = 1232
 
 // MaxCongestionWindowPackets is the maximum congestion window in packet.
-const MaxCongestionWindowPackets = 10000
+const MaxCongestionWindowPackets = 20000
 
 // MaxUndecryptablePackets limits the number of undecryptable packets that are queued in the session.
 const MaxUndecryptablePackets = 33
@@ -22,16 +22,16 @@ const MaxUndecryptablePackets = 33
 const ConnectionFlowControlMultiplier = 1.5
 
 // InitialMaxStreamData is the stream-level flow control window for receiving data
-const InitialMaxStreamData = (1 << 10) * 512 // 512 kb
+const InitialMaxStreamData = (1 << 20) * 4 // 4 MB
 
 // InitialMaxData is the connection-level flow control window for receiving data
 const InitialMaxData = ConnectionFlowControlMultiplier * InitialMaxStreamData
 
 // DefaultMaxReceiveStreamFlowControlWindow is the default maximum stream-level flow control window for receiving data, for the server
-const DefaultMaxReceiveStreamFlowControlWindow = 6 * (1 << 20) // 6 MB
+const DefaultMaxReceiveStreamFlowControlWindow = 8 * (1 << 20) // 8 MB
 
 // DefaultMaxReceiveConnectionFlowControlWindow is the default connection-level flow control window for receiving data, for the server
-const DefaultMaxReceiveConnectionFlowControlWindow = 15 * (1 << 20) // 12 MB
+const DefaultMaxReceiveConnectionFlowControlWindow = 16 * (1 << 20) // 16 MB
 
 // WindowUpdateThreshold is the fraction of the receive window that has to be consumed before an higher offset is advertised to the client
 const WindowUpdateThreshold = 0.25

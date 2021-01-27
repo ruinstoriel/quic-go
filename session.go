@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/lucas-clemente/quic-go/congestion"
 	"io"
 	"net"
 	"reflect"
@@ -1776,4 +1777,8 @@ func (s *session) getPerspective() protocol.Perspective {
 
 func (s *session) GetVersion() protocol.VersionNumber {
 	return s.version
+}
+
+func (s *session) SetCongestionControl(cc congestion.CongestionControl) {
+	s.sentPacketHandler.SetCongestionControl(cc)
 }

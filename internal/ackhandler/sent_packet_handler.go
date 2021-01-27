@@ -3,6 +3,8 @@ package ackhandler
 import (
 	"errors"
 	"fmt"
+	congestionExt "github.com/lucas-clemente/quic-go/congestion"
+	"sync/atomic"
 	"time"
 
 	"github.com/lucas-clemente/quic-go/internal/congestion"
@@ -68,7 +70,7 @@ type sentPacketHandler struct {
 
 	bytesInFlight protocol.ByteCount
 
-	congestion congestion.SendAlgorithmWithDebugInfos
+	congestion atomic.Value // congestion.SendAlgorithmWithDebugInfos
 	rttStats   *utils.RTTStats
 
 	// The number of times a PTO has been sent without receiving an ack.
@@ -101,12 +103,13 @@ func newSentPacketHandler(
 	tracer logging.ConnectionTracer,
 	logger utils.Logger,
 ) *sentPacketHandler {
-	congestion := congestion.NewCubicSender(
+	var cv atomic.Value
+	cv.Store(congestion.NewCubicSender(
 		congestion.DefaultClock{},
 		rttStats,
 		true, // use Reno
 		tracer,
-	)
+	))
 
 	return &sentPacketHandler{
 		peerCompletedAddressValidation: pers == protocol.PerspectiveServer,
@@ -115,7 +118,7 @@ func newSentPacketHandler(
 		handshakePackets:               newPacketNumberSpace(0, rttStats),
 		appDataPackets:                 newPacketNumberSpace(0, rttStats),
 		rttStats:                       rttStats,
-		congestion:                     congestion,
+		congestion:                     cv,
 		perspective:                    pers,
 		traceCallback:                  traceCallback,
 		tracer:                         tracer,
@@ -220,7 +223,8 @@ func (h *sentPacketHandler) SentPacket(packet *Packet) {
 	isAckEliciting := h.sentPacketImpl(packet)
 	h.getPacketNumberSpace(packet.EncryptionLevel).history.SentPacket(packet, isAckEliciting)
 	if h.tracer != nil && isAckEliciting {
-		h.tracer.UpdatedMetrics(h.rttStats, h.congestion.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
+		cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
+		h.tracer.UpdatedMetrics(h.rttStats, cc.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
 	}
 	if isAckEliciting || !h.peerCompletedAddressValidation {
 		h.setLossDetectionTimer()
@@ -260,7 +264,9 @@ func (h *sentPacketHandler) sentPacketImpl(packet *Packet) bool /* is ack-elicit
 			h.numProbesToSend--
 		}
 	}
-	h.congestion.OnPacketSent(packet.SendTime, h.bytesInFlight, packet.PacketNumber, packet.Length, isAckEliciting)
+
+	cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
+	cc.OnPacketSent(packet.SendTime, h.bytesInFlight, packet.PacketNumber, packet.Length, isAckEliciting)
 
 	return isAckEliciting
 }
@@ -284,6 +290,8 @@ func (h *sentPacketHandler) ReceivedAck(ack *wire.AckFrame, encLevel protocol.En
 		h.setLossDetectionTimer()
 	}
 
+	cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
+
 	priorInFlight := h.bytesInFlight
 	ackedPackets, err := h.detectAndRemoveAckedPackets(ack, encLevel)
 	if err != nil || len(ackedPackets) == 0 {
@@ -301,9 +309,9 @@ func (h *sentPacketHandler) ReceivedAck(ack *wire.AckFrame, encLevel protocol.En
 			if h.logger.Debug() {
 				h.logger.Debugf("\tupdated RTT: %s (σ: %s)", h.rttStats.SmoothedRTT(), h.rttStats.MeanDeviation())
 			}
-			h.congestion.MaybeExitSlowStart()
+			cc.MaybeExitSlowStart()
 			if h.tracer != nil {
-				h.tracer.UpdatedMetrics(h.rttStats, h.congestion.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
+				h.tracer.UpdatedMetrics(h.rttStats, cc.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
 			}
 		}
 	}
@@ -312,14 +320,14 @@ func (h *sentPacketHandler) ReceivedAck(ack *wire.AckFrame, encLevel protocol.En
 		return err
 	}
 	for _, p := range lostPackets {
-		h.congestion.OnPacketLost(p.PacketNumber, p.Length, priorInFlight)
+		cc.OnPacketLost(p.PacketNumber, p.Length, priorInFlight)
 	}
 	for _, p := range ackedPackets {
 		if p.skippedPacket {
 			return fmt.Errorf("received an ACK for skipped packet number: %d (%s)", p.PacketNumber, encLevel)
 		}
 		if p.includedInBytesInFlight && !p.declaredLost {
-			h.congestion.OnPacketAcked(p.PacketNumber, p.Length, priorInFlight, rcvTime)
+			cc.OnPacketAcked(p.PacketNumber, p.Length, priorInFlight, rcvTime)
 		}
 		h.removeFromBytesInFlight(p)
 	}
@@ -614,8 +622,9 @@ func (h *sentPacketHandler) onVerifiedLossDetectionTimeout() error {
 		if err != nil {
 			return err
 		}
+		cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
 		for _, p := range lostPackets {
-			h.congestion.OnPacketLost(p.PacketNumber, p.Length, priorInFlight)
+			cc.OnPacketLost(p.PacketNumber, p.Length, priorInFlight)
 		}
 		return nil
 	}
@@ -710,9 +719,10 @@ func (h *sentPacketHandler) SendMode() SendMode {
 		return h.ptoMode
 	}
 	// Only send ACKs if we're congestion limited.
-	if !h.congestion.CanSend(h.bytesInFlight) {
+	cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
+	if !cc.CanSend(h.bytesInFlight) {
 		if h.logger.Debug() {
-			h.logger.Debugf("Congestion limited: bytes in flight %d, window %d", h.bytesInFlight, h.congestion.GetCongestionWindow())
+			h.logger.Debugf("Congestion limited: bytes in flight %d, window %d", h.bytesInFlight, cc.GetCongestionWindow())
 		}
 		return SendAck
 	}
@@ -726,11 +736,11 @@ func (h *sentPacketHandler) SendMode() SendMode {
 }
 
 func (h *sentPacketHandler) TimeUntilSend() time.Time {
-	return h.congestion.TimeUntilSend(h.bytesInFlight)
+	return h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos).TimeUntilSend(h.bytesInFlight)
 }
 
 func (h *sentPacketHandler) HasPacingBudget() bool {
-	return h.congestion.HasPacingBudget()
+	return h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos).HasPacingBudget()
 }
 
 func (h *sentPacketHandler) isAmplificationLimited() bool {
@@ -795,7 +805,8 @@ func (h *sentPacketHandler) ResetForRetry() error {
 			h.logger.Debugf("\tupdated RTT: %s (σ: %s)", h.rttStats.SmoothedRTT(), h.rttStats.MeanDeviation())
 		}
 		if h.tracer != nil {
-			h.tracer.UpdatedMetrics(h.rttStats, h.congestion.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
+			cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
+			h.tracer.UpdatedMetrics(h.rttStats, cc.GetCongestionWindow(), h.bytesInFlight, h.packetsInFlight())
 		}
 	}
 	h.initialPackets = newPacketNumberSpace(h.initialPackets.pns.Pop(), h.rttStats)
@@ -820,13 +831,19 @@ func (h *sentPacketHandler) SetHandshakeConfirmed() {
 }
 
 func (h *sentPacketHandler) GetStats() *quictrace.TransportState {
+	cc := h.congestion.Load().(congestion.SendAlgorithmWithDebugInfos)
 	return &quictrace.TransportState{
 		MinRTT:           h.rttStats.MinRTT(),
 		SmoothedRTT:      h.rttStats.SmoothedRTT(),
 		LatestRTT:        h.rttStats.LatestRTT(),
 		BytesInFlight:    h.bytesInFlight,
-		CongestionWindow: h.congestion.GetCongestionWindow(),
-		InSlowStart:      h.congestion.InSlowStart(),
-		InRecovery:       h.congestion.InRecovery(),
+		CongestionWindow: cc.GetCongestionWindow(),
+		InSlowStart:      cc.InSlowStart(),
+		InRecovery:       cc.InRecovery(),
 	}
+}
+
+func (h *sentPacketHandler) SetCongestionControl(cc congestionExt.CongestionControl) {
+	cc.SetRTTStatsProvider(h.rttStats)
+	h.congestion.Store(&ccAdapter{cc})
 }

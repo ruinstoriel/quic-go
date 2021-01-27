@@ -10,6 +10,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	congestion "github.com/lucas-clemente/quic-go/congestion"
 	protocol "github.com/lucas-clemente/quic-go/internal/protocol"
 	qtls_go1_15 "github.com/marten-seemann/qtls-go1-15"
 )
@@ -223,6 +224,18 @@ func (m *MockQuicSession) RemoteAddr() net.Addr {
 func (mr *MockQuicSessionMockRecorder) RemoteAddr() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoteAddr", reflect.TypeOf((*MockQuicSession)(nil).RemoteAddr))
+}
+
+// SetCongestionControl mocks base method.
+func (m *MockQuicSession) SetCongestionControl(arg0 congestion.CongestionControl) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetCongestionControl", arg0)
+}
+
+// SetCongestionControl indicates an expected call of SetCongestionControl.
+func (mr *MockQuicSessionMockRecorder) SetCongestionControl(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetCongestionControl", reflect.TypeOf((*MockQuicSession)(nil).SetCongestionControl), arg0)
 }
 
 // destroy mocks base method.
