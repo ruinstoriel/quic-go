@@ -424,7 +424,7 @@ var _ = Describe("SentPacketHandler", func() {
 
 		JustBeforeEach(func() {
 			cong = mocks.NewMockSendAlgorithmWithDebugInfos(mockCtrl)
-			handler.congestion.Store(cong)
+			handler.congestion = cong
 		})
 
 		It("should call OnSent", func() {
