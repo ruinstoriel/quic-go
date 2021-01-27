@@ -104,12 +104,13 @@ func newSentPacketHandler(
 	logger utils.Logger,
 ) *sentPacketHandler {
 	var cv atomic.Value
-	cv.Store(congestion.NewCubicSender(
-		congestion.DefaultClock{},
-		rttStats,
-		true, // use Reno
-		tracer,
-	))
+	cv.Store(congestion.SendAlgorithmWithDebugInfos(
+		congestion.NewCubicSender(
+			congestion.DefaultClock{},
+			rttStats,
+			true, // use Reno
+			tracer,
+		)))
 
 	return &sentPacketHandler{
 		peerCompletedAddressValidation: pers == protocol.PerspectiveServer,
@@ -845,5 +846,5 @@ func (h *sentPacketHandler) GetStats() *quictrace.TransportState {
 
 func (h *sentPacketHandler) SetCongestionControl(cc congestionExt.CongestionControl) {
 	cc.SetRTTStatsProvider(h.rttStats)
-	h.congestion.Store(&ccAdapter{cc})
+	h.congestion.Store(congestion.SendAlgorithmWithDebugInfos(&ccAdapter{cc}))
 }
