@@ -3,6 +3,7 @@ package flowcontrol
 import (
 	"errors"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/lucas-clemente/quic-go/internal/protocol"
@@ -40,7 +41,9 @@ func NewConnectionFlowController(
 }
 
 func (c *connectionFlowController) SendWindowSize() protocol.ByteCount {
-	return c.baseFlowController.sendWindowSize()
+	s := c.baseFlowController.sendWindowSize()
+	log.Println("SendWindowSize", s)
+	return s
 }
 
 // IncrementHighestReceived adds an increment to the highestReceived value
