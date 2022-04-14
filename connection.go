@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/lucas-clemente/quic-go/congestion"
 	"io"
 	"net"
 	"reflect"
@@ -2000,4 +2001,8 @@ func (s *connection) NextConnection() Connection {
 	<-s.HandshakeComplete().Done()
 	s.streamsMap.UseResetMaps()
 	return s
+}
+
+func (s *connection) SetCongestionControl(cc congestion.CongestionControl) {
+	s.sentPacketHandler.SetCongestionControl(cc)
 }
