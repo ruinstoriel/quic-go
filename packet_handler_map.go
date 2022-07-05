@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"hash"
 	"io"
-	"log"
 	"net"
 	"os"
 	"strconv"
@@ -106,7 +105,7 @@ func setReceiveBuffer(c net.PacketConn, logger utils.Logger) error {
 		logger.Debugf("Conn has receive buffer of %d kiB (wanted: at least %d kiB)", size/1024, protocol.DesiredReceiveBufferSize/1024)
 		return nil
 	}
-	if err := conn.SetReadBuffer(protocol.DesiredReceiveBufferSize); err != nil {
+	if err := setConnReadBuffer(conn, protocol.DesiredReceiveBufferSize); err != nil {
 		return fmt.Errorf("failed to increase receive buffer size: %w", err)
 	}
 	newSize, err := inspectReadBuffer(c)
@@ -123,7 +122,16 @@ func setReceiveBuffer(c net.PacketConn, logger utils.Logger) error {
 	return nil
 }
 
-// only print warnings about the UDP receive buffer size once
+func setConnReadBuffer(conn interface{ SetReadBuffer(int) error }, size int) error {
+	if ferr := setConnReadBufferForce(conn, size); ferr != nil {
+		if err := conn.SetReadBuffer(size); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// only print warnings about the UPD receive buffer size once
 var receiveBufferWarningOnce sync.Once
 
 func newPacketHandlerMap(
@@ -139,7 +147,7 @@ func newPacketHandlerMap(
 				if disable, _ := strconv.ParseBool(os.Getenv("QUIC_GO_DISABLE_RECEIVE_BUFFER_WARNING")); disable {
 					return
 				}
-				log.Printf("%s. See https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size for details.", err)
+				// log.Printf("%s. See https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size for details.", err)
 			})
 		}
 	}

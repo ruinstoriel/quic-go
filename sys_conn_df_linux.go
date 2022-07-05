@@ -12,12 +12,10 @@ import (
 )
 
 func setDF(rawConn syscall.RawConn) error {
-	// Enabling IP_MTU_DISCOVER will force the kernel to return "sendto: message too long"
-	// and the datagram will not be fragmented
 	var errDFIPv4, errDFIPv6 error
 	if err := rawConn.Control(func(fd uintptr) {
-		errDFIPv4 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IP, unix.IP_MTU_DISCOVER, unix.IP_PMTUDISC_DO)
-		errDFIPv6 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IPV6, unix.IPV6_MTU_DISCOVER, unix.IPV6_PMTUDISC_DO)
+		errDFIPv4 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IP, unix.IP_MTU_DISCOVER, unix.IP_PMTUDISC_PROBE)
+		errDFIPv6 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IPV6, unix.IPV6_MTU_DISCOVER, unix.IPV6_PMTUDISC_PROBE)
 	}); err != nil {
 		return err
 	}
@@ -29,7 +27,7 @@ func setDF(rawConn syscall.RawConn) error {
 	case errDFIPv4 != nil && errDFIPv6 == nil:
 		utils.DefaultLogger.Debugf("Setting DF for IPv6.")
 	case errDFIPv4 != nil && errDFIPv6 != nil:
-		return errors.New("setting DF failed for both IPv4 and IPv6")
+		utils.DefaultLogger.Errorf("Setting DF failed for both IPv4 and IPv6: errDFIPv4=%s, errDFIPv6=%s", errDFIPv4.Error(), errDFIPv6.Error())
 	}
 	return nil
 }
