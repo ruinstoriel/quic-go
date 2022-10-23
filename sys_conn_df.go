@@ -1,4 +1,5 @@
-//go:build !linux && !windows
+//go:build !linux && !windows && !darwin && !freebsd
+// +build !linux,!windows,!darwin,!freebsd
 
 package quic
 

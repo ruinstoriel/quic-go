@@ -12,7 +12,7 @@ import (
 
 const (
 	// same for both IPv4 and IPv6 on Windows
-	// https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Networking/WinSock/constant.IP_DONTFRAG.html
+	// https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Networking/WinSock/constant.IP_DONTFRAGMENT.html
 	// https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Networking/WinSock/constant.IPV6_DONTFRAG.html
 	IP_DONTFRAGMENT = 14
 	IPV6_DONTFRAG   = 14
@@ -34,7 +34,7 @@ func setDF(rawConn syscall.RawConn) error {
 	case errDFIPv4 != nil && errDFIPv6 == nil:
 		utils.DefaultLogger.Debugf("Setting DF for IPv6.")
 	case errDFIPv4 != nil && errDFIPv6 != nil:
-		return errors.New("setting DF failed for both IPv4 and IPv6")
+		utils.DefaultLogger.Errorf("Setting DF failed for both IPv4 and IPv6: errDFIPv4=%s, errDFIPv6=%s", errDFIPv4.Error(), errDFIPv6.Error())
 	}
 	return nil
 }
