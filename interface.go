@@ -3,10 +3,11 @@ package quic
 import (
 	"context"
 	"errors"
-	"github.com/lucas-clemente/quic-go/congestion"
 	"io"
 	"net"
 	"time"
+
+	"github.com/lucas-clemente/quic-go/congestion"
 
 	"github.com/lucas-clemente/quic-go/internal/handshake"
 	"github.com/lucas-clemente/quic-go/internal/protocol"

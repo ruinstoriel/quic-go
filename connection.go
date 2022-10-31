@@ -6,13 +6,14 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/lucas-clemente/quic-go/congestion"
 	"io"
 	"net"
 	"reflect"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/lucas-clemente/quic-go/congestion"
 
 	"github.com/lucas-clemente/quic-go/internal/ackhandler"
 	"github.com/lucas-clemente/quic-go/internal/flowcontrol"
@@ -920,6 +921,11 @@ func (s *connection) handlePacketImpl(rp *receivedPacket) bool {
 			processed = s.handleShortHeaderPacket(p, destConnID)
 			break
 		}
+	}
+
+	if s.perspective == protocol.PerspectiveServer && processed {
+		// Connection migration
+		s.conn.SetRemoteAddr(rp.remoteAddr)
 	}
 
 	p.buffer.MaybeRelease()

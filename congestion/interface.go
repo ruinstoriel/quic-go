@@ -1,12 +1,15 @@
 package congestion
 
 import (
-	"github.com/lucas-clemente/quic-go/internal/protocol"
 	"time"
+
+	"github.com/lucas-clemente/quic-go/internal/protocol"
 )
 
-type ByteCount protocol.ByteCount
-type PacketNumber protocol.PacketNumber
+type (
+	ByteCount    protocol.ByteCount
+	PacketNumber protocol.PacketNumber
+)
 
 type CongestionControl interface {
 	SetRTTStatsProvider(provider RTTStatsProvider)

@@ -5,8 +5,9 @@ package quic
 
 import (
 	"errors"
-	"golang.org/x/sys/unix"
 	"syscall"
+
+	"golang.org/x/sys/unix"
 
 	"github.com/lucas-clemente/quic-go/internal/utils"
 )
