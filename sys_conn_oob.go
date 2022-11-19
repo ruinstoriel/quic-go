@@ -53,6 +53,27 @@ func inspectReadBuffer(c interface{}) (int, error) {
 	return size, serr
 }
 
+func inspectWriteBuffer(c interface{}) (int, error) {
+	conn, ok := c.(interface {
+		SyscallConn() (syscall.RawConn, error)
+	})
+	if !ok {
+		return 0, errors.New("doesn't have a SyscallConn")
+	}
+	rawConn, err := conn.SyscallConn()
+	if err != nil {
+		return 0, fmt.Errorf("couldn't get syscall.RawConn: %w", err)
+	}
+	var size int
+	var serr error
+	if err := rawConn.Control(func(fd uintptr) {
+		size, serr = unix.GetsockoptInt(int(fd), unix.SOL_SOCKET, unix.SO_SNDBUF)
+	}); err != nil {
+		return 0, err
+	}
+	return size, serr
+}
+
 type oobConn struct {
 	OOBCapablePacketConn
 	batchConn batchConn

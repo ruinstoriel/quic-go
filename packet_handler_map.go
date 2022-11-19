@@ -9,9 +9,6 @@ import (
 	"hash"
 	"io"
 	"net"
-	"os"
-	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -98,9 +95,48 @@ func setReceiveBuffer(c net.PacketConn, logger utils.Logger) error {
 	return nil
 }
 
+func setSendBuffer(c net.PacketConn, logger utils.Logger) error {
+	conn, ok := c.(interface{ SetWriteBuffer(int) error })
+	if !ok {
+		return errors.New("connection doesn't allow setting of send buffer size. Not a *net.UDPConn?")
+	}
+	size, err := inspectWriteBuffer(c)
+	if err != nil {
+		return fmt.Errorf("failed to determine send buffer size: %w", err)
+	}
+	if size >= protocol.DesiredSendBufferSize {
+		logger.Debugf("Conn has send buffer of %d kiB (wanted: at least %d kiB)", size/1024, protocol.DesiredSendBufferSize/1024)
+		return nil
+	}
+	if err := setConnWriteBuffer(conn, protocol.DesiredSendBufferSize); err != nil {
+		return fmt.Errorf("failed to increase send buffer size: %w", err)
+	}
+	newSize, err := inspectWriteBuffer(c)
+	if err != nil {
+		return fmt.Errorf("failed to determine send buffer size: %w", err)
+	}
+	if newSize == size {
+		return fmt.Errorf("failed to increase send buffer size (wanted: %d kiB, got %d kiB)", protocol.DesiredSendBufferSize/1024, newSize/1024)
+	}
+	if newSize < protocol.DesiredSendBufferSize {
+		return fmt.Errorf("failed to sufficiently increase send buffer size (was: %d kiB, wanted: %d kiB, got: %d kiB)", size/1024, protocol.DesiredSendBufferSize/1024, newSize/1024)
+	}
+	logger.Debugf("Increased send buffer size to %d kiB", newSize/1024)
+	return nil
+}
+
 func setConnReadBuffer(conn interface{ SetReadBuffer(int) error }, size int) error {
 	if ferr := setConnReadBufferForce(conn, size); ferr != nil {
 		if err := conn.SetReadBuffer(size); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func setConnWriteBuffer(conn interface{ SetWriteBuffer(int) error }, size int) error {
+	if ferr := setConnWriteBufferForce(conn, size); ferr != nil {
+		if err := conn.SetWriteBuffer(size); err != nil {
 			return err
 		}
 	}
@@ -117,16 +153,8 @@ func newPacketHandlerMap(
 	tracer logging.Tracer,
 	logger utils.Logger,
 ) (packetHandlerManager, error) {
-	if err := setReceiveBuffer(c, logger); err != nil {
-		if !strings.Contains(err.Error(), "use of closed network connection") {
-			receiveBufferWarningOnce.Do(func() {
-				if disable, _ := strconv.ParseBool(os.Getenv("QUIC_GO_DISABLE_RECEIVE_BUFFER_WARNING")); disable {
-					return
-				}
-				// log.Printf("%s. See https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size for details.", err)
-			})
-		}
-	}
+	_ = setReceiveBuffer(c, logger)
+	_ = setSendBuffer(c, logger)
 	conn, err := wrapConn(c)
 	if err != nil {
 		return nil, err
