@@ -1,4 +1,5 @@
-//go:build linux
+//go:build darwin || freebsd
+// +build darwin freebsd
 
 package quic
 
@@ -6,15 +7,16 @@ import (
 	"errors"
 	"syscall"
 
-	"github.com/lucas-clemente/quic-go/internal/utils"
 	"golang.org/x/sys/unix"
+
+	"github.com/lucas-clemente/quic-go/internal/utils"
 )
 
 func setDF(rawConn syscall.RawConn) error {
 	var errDFIPv4, errDFIPv6 error
 	if err := rawConn.Control(func(fd uintptr) {
-		errDFIPv4 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IP, unix.IP_MTU_DISCOVER, unix.IP_PMTUDISC_PROBE)
-		errDFIPv6 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IPV6, unix.IPV6_MTU_DISCOVER, unix.IPV6_PMTUDISC_PROBE)
+		errDFIPv4 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IP, unix.IP_DONTFRAG, 1)
+		errDFIPv6 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IPV6, unix.IPV6_DONTFRAG, 1)
 	}); err != nil {
 		return err
 	}
@@ -32,6 +34,6 @@ func setDF(rawConn syscall.RawConn) error {
 }
 
 func isMsgSizeErr(err error) bool {
-	// https://man7.org/linux/man-pages/man7/udp.7.html
+	// https://www.freebsd.org/cgi/man.cgi?query=ip&apropos=0&sektion=0&manpath=FreeBSD+14.0-current&arch=default&format=html
 	return errors.Is(err, unix.EMSGSIZE)
 }

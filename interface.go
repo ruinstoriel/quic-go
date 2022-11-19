@@ -7,6 +7,8 @@ import (
 	"net"
 	"time"
 
+	"github.com/lucas-clemente/quic-go/congestion"
+
 	"github.com/lucas-clemente/quic-go/internal/handshake"
 	"github.com/lucas-clemente/quic-go/internal/protocol"
 	"github.com/lucas-clemente/quic-go/logging"
@@ -184,6 +186,9 @@ type Connection interface {
 	SendMessage([]byte) error
 	// ReceiveMessage gets a message received in a datagram, as specified in RFC 9221.
 	ReceiveMessage() ([]byte, error)
+
+	// Replace the current congestion control algorithm with a new one.
+	SetCongestionControl(congestion.CongestionControl)
 }
 
 // An EarlyConnection is a connection that is handshaking.
