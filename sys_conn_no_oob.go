@@ -4,8 +4,8 @@ package quic
 
 import "net"
 
-func newConn(c net.PacketConn) (rawConn, error) {
-	return &basicConn{PacketConn: c}, nil
+func newConn(c net.PacketConn, obfs Obfuscator) (rawConn, error) {
+	return &basicConn{PacketConn: c, obfs: obfs}, nil
 }
 
 func inspectReadBuffer(interface{}) (int, error) {

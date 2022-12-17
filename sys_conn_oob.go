@@ -80,6 +80,8 @@ type oobConn struct {
 	OOBCapablePacketConn
 	batchConn batchConn
 
+	obfs Obfuscator
+
 	readPos uint8
 	// Packets received from the kernel, but not yet returned by ReadPacket().
 	messages []ipv4.Message
@@ -88,7 +90,7 @@ type oobConn struct {
 
 var _ rawConn = &oobConn{}
 
-func newConn(c OOBCapablePacketConn) (*oobConn, error) {
+func newConn(c OOBCapablePacketConn, obfs Obfuscator) (*oobConn, error) {
 	rawConn, err := c.SyscallConn()
 	if err != nil {
 		return nil, err
@@ -153,6 +155,7 @@ func newConn(c OOBCapablePacketConn) (*oobConn, error) {
 	oobConn := &oobConn{
 		OOBCapablePacketConn: c,
 		batchConn:            bc,
+		obfs:                 obfs,
 		messages:             msgs,
 		readPos:              readBatchSize,
 	}
@@ -242,10 +245,15 @@ func (c *oobConn) ReadPacket() (*receivedPacket, error) {
 			ifIndex: ifIndex,
 		}
 	}
+	pd := msg.Buffers[0][:msg.N]
+	if c.obfs != nil {
+		n := c.obfs.Deobfuscate(pd)
+		pd = pd[:n]
+	}
 	return &receivedPacket{
 		remoteAddr: msg.Addr,
 		rcvTime:    time.Now(),
-		data:       msg.Buffers[0][:msg.N],
+		data:       pd,
 		ecn:        ecn,
 		info:       info,
 		buffer:     buffer,
@@ -253,6 +261,11 @@ func (c *oobConn) ReadPacket() (*receivedPacket, error) {
 }
 
 func (c *oobConn) WritePacket(b []byte, addr net.Addr, oob []byte) (n int, err error) {
+	if c.obfs != nil {
+		bb, free := c.obfs.Obfuscate(b, false)
+		defer free()
+		b = bb[0]
+	}
 	n, _, err = c.OOBCapablePacketConn.WriteMsgUDP(b, oob, addr.(*net.UDPAddr))
 	return n, err
 }
@@ -285,8 +298,10 @@ func (c *oobSendConn) WritePackets(packets [][]byte, addr net.Addr, oob []byte) 
 	}
 
 	for _, p := range packets {
+		bb, free := c.obfs.Obfuscate(p, true)
+		defer free()
 		c.sendMsgBuf = append(c.sendMsgBuf, ipv4.Message{
-			Buffers: [][]byte{p},
+			Buffers: bb,
 			OOB:     oob,
 			Addr:    addr,
 		})
