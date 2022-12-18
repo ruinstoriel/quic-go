@@ -298,8 +298,14 @@ func (c *oobSendConn) WritePackets(packets [][]byte, addr net.Addr, oob []byte) 
 	}
 
 	for _, p := range packets {
-		bb, free := c.obfs.Obfuscate(p, true)
-		defer free()
+		var bb [][]byte
+		if c.obfs != nil {
+			var free func()
+			bb, free = c.obfs.Obfuscate(p, true)
+			defer free()
+		} else {
+			bb = [][]byte{p}
+		}
 		c.sendMsgBuf = append(c.sendMsgBuf, ipv4.Message{
 			Buffers: bb,
 			OOB:     oob,
