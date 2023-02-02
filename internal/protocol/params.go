@@ -3,7 +3,10 @@ package protocol
 import "time"
 
 // DesiredReceiveBufferSize is the kernel UDP receive buffer size that we'd like to use.
-const DesiredReceiveBufferSize = (1 << 20) * 2 // 2 MB
+const DesiredReceiveBufferSize = (1 << 20) * 8 // 8 MB
+
+// DesiredSendBufferSize is the kernel UDP send buffer size that we'd like to use.
+const DesiredSendBufferSize = (1 << 20) * 8 // 8 MB
 
 // InitialPacketSizeIPv4 is the maximum packet size that we use for sending IPv4 packets.
 const InitialPacketSizeIPv4 = 1252
@@ -12,7 +15,7 @@ const InitialPacketSizeIPv4 = 1252
 const InitialPacketSizeIPv6 = 1232
 
 // MaxCongestionWindowPackets is the maximum congestion window in packet.
-const MaxCongestionWindowPackets = 10000
+const MaxCongestionWindowPackets = 20000
 
 // MaxUndecryptablePackets limits the number of undecryptable packets that are queued in the connection.
 const MaxUndecryptablePackets = 32
@@ -22,16 +25,16 @@ const MaxUndecryptablePackets = 32
 const ConnectionFlowControlMultiplier = 1.5
 
 // DefaultInitialMaxStreamData is the default initial stream-level flow control window for receiving data
-const DefaultInitialMaxStreamData = (1 << 10) * 512 // 512 kb
+const DefaultInitialMaxStreamData = (1 << 20) * 4 // 4 MB
 
 // DefaultInitialMaxData is the connection-level flow control window for receiving data
 const DefaultInitialMaxData = ConnectionFlowControlMultiplier * DefaultInitialMaxStreamData
 
 // DefaultMaxReceiveStreamFlowControlWindow is the default maximum stream-level flow control window for receiving data
-const DefaultMaxReceiveStreamFlowControlWindow = 6 * (1 << 20) // 6 MB
+const DefaultMaxReceiveStreamFlowControlWindow = 8 * (1 << 20) // 8 MB
 
 // DefaultMaxReceiveConnectionFlowControlWindow is the default connection-level flow control window for receiving data
-const DefaultMaxReceiveConnectionFlowControlWindow = 15 * (1 << 20) // 15 MB
+const DefaultMaxReceiveConnectionFlowControlWindow = 16 * (1 << 20) // 16 MB
 
 // WindowUpdateThreshold is the fraction of the receive window that has to be consumed before an higher offset is advertised to the client
 const WindowUpdateThreshold = 0.25
@@ -81,7 +84,7 @@ const MaxNonAckElicitingAcks = 19
 
 // MaxStreamFrameSorterGaps is the maximum number of gaps between received StreamFrames
 // prevents DoS attacks against the streamFrameSorter
-const MaxStreamFrameSorterGaps = 1000
+const MaxStreamFrameSorterGaps = 20000
 
 // MinStreamFrameBufferSize is the minimum data length of a received STREAM frame
 // that we use the buffer for. This protects against a DoS where an attacker would send us

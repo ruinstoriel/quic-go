@@ -1,4 +1,5 @@
-//go:build windows
+//go:build darwin || freebsd
+// +build darwin freebsd
 
 package quic
 
@@ -6,24 +7,16 @@ import (
 	"errors"
 	"syscall"
 
-	"golang.org/x/sys/windows"
+	"golang.org/x/sys/unix"
 
 	"github.com/quic-go/quic-go/internal/utils"
-)
-
-const (
-	// same for both IPv4 and IPv6 on Windows
-	// https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Networking/WinSock/constant.IP_DONTFRAGMENT.html
-	// https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Networking/WinSock/constant.IPV6_DONTFRAG.html
-	IP_DONTFRAGMENT = 14
-	IPV6_DONTFRAG   = 14
 )
 
 func setDF(rawConn syscall.RawConn) error {
 	var errDFIPv4, errDFIPv6 error
 	if err := rawConn.Control(func(fd uintptr) {
-		errDFIPv4 = windows.SetsockoptInt(windows.Handle(fd), windows.IPPROTO_IP, IP_DONTFRAGMENT, 1)
-		errDFIPv6 = windows.SetsockoptInt(windows.Handle(fd), windows.IPPROTO_IPV6, IPV6_DONTFRAG, 1)
+		errDFIPv4 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IP, unix.IP_DONTFRAG, 1)
+		errDFIPv6 = unix.SetsockoptInt(int(fd), unix.IPPROTO_IPV6, unix.IPV6_DONTFRAG, 1)
 	}); err != nil {
 		return err
 	}
@@ -41,6 +34,6 @@ func setDF(rawConn syscall.RawConn) error {
 }
 
 func isMsgSizeErr(err error) bool {
-	// https://docs.microsoft.com/en-us/windows/win32/winsock/windows-sockets-error-codes-2
-	return errors.Is(err, windows.WSAEMSGSIZE)
+	// https://www.freebsd.org/cgi/man.cgi?query=ip&apropos=0&sektion=0&manpath=FreeBSD+14.0-current&arch=default&format=html
+	return errors.Is(err, unix.EMSGSIZE)
 }
