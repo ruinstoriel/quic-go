@@ -7,13 +7,15 @@ import (
 // A sendConn allows sending using a simple Write() on a non-connected packet conn.
 type sendConn interface {
 	Write([]byte) error
+	WritePackets([][]byte) error
 	Close() error
 	LocalAddr() net.Addr
 	RemoteAddr() net.Addr
+	SetRemoteAddr(net.Addr)
 }
 
 type sconn struct {
-	rawConn
+	raw rawSendConn
 
 	remoteAddr net.Addr
 	info       *packetInfo
@@ -24,7 +26,7 @@ var _ sendConn = &sconn{}
 
 func newSendConn(c rawConn, remote net.Addr, info *packetInfo) sendConn {
 	return &sconn{
-		rawConn:    c,
+		raw:        c.newSendConn(),
 		remoteAddr: remote,
 		info:       info,
 		oob:        info.OOB(),
@@ -32,7 +34,12 @@ func newSendConn(c rawConn, remote net.Addr, info *packetInfo) sendConn {
 }
 
 func (c *sconn) Write(p []byte) error {
-	_, err := c.WritePacket(p, c.remoteAddr, c.oob)
+	_, err := c.raw.WritePacket(p, c.remoteAddr, c.oob)
+	return err
+}
+
+func (c *sconn) WritePackets(p [][]byte) error {
+	_, err := c.raw.WritePackets(p, c.remoteAddr, c.oob)
 	return err
 }
 
@@ -41,7 +48,7 @@ func (c *sconn) RemoteAddr() net.Addr {
 }
 
 func (c *sconn) LocalAddr() net.Addr {
-	addr := c.rawConn.LocalAddr()
+	addr := c.raw.LocalAddr()
 	if c.info != nil {
 		if udpAddr, ok := addr.(*net.UDPAddr); ok {
 			addrCopy := *udpAddr
@@ -52,23 +59,10 @@ func (c *sconn) LocalAddr() net.Addr {
 	return addr
 }
 
-type spconn struct {
-	net.PacketConn
-
-	remoteAddr net.Addr
+func (c *sconn) SetRemoteAddr(addr net.Addr) {
+	c.remoteAddr = addr
 }
 
-var _ sendConn = &spconn{}
-
-func newSendPconn(c net.PacketConn, remote net.Addr) sendConn {
-	return &spconn{PacketConn: c, remoteAddr: remote}
-}
-
-func (c *spconn) Write(p []byte) error {
-	_, err := c.WriteTo(p, c.remoteAddr)
-	return err
-}
-
-func (c *spconn) RemoteAddr() net.Addr {
-	return c.remoteAddr
+func (c *sconn) Close() error {
+	return c.raw.Close()
 }

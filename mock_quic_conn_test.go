@@ -10,6 +10,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	congestion "github.com/quic-go/quic-go/congestion"
 	protocol "github.com/quic-go/quic-go/internal/protocol"
 )
 
@@ -265,6 +266,18 @@ func (m *MockQuicConn) SendMessage(arg0 []byte) error {
 func (mr *MockQuicConnMockRecorder) SendMessage(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMessage", reflect.TypeOf((*MockQuicConn)(nil).SendMessage), arg0)
+}
+
+// SetCongestionControl mocks base method.
+func (m *MockQuicConn) SetCongestionControl(arg0 congestion.CongestionControl) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetCongestionControl", arg0)
+}
+
+// SetCongestionControl indicates an expected call of SetCongestionControl.
+func (mr *MockQuicConnMockRecorder) SetCongestionControl(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetCongestionControl", reflect.TypeOf((*MockQuicConn)(nil).SetCongestionControl), arg0)
 }
 
 // destroy mocks base method.
