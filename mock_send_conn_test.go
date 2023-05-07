@@ -76,6 +76,18 @@ func (mr *MockSendConnMockRecorder) RemoteAddr() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoteAddr", reflect.TypeOf((*MockSendConn)(nil).RemoteAddr))
 }
 
+// SetRemoteAddr mocks base method.
+func (m *MockSendConn) SetRemoteAddr(arg0 net.Addr) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetRemoteAddr", arg0)
+}
+
+// SetRemoteAddr indicates an expected call of SetRemoteAddr.
+func (mr *MockSendConnMockRecorder) SetRemoteAddr(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetRemoteAddr", reflect.TypeOf((*MockSendConn)(nil).SetRemoteAddr), arg0)
+}
+
 // Write mocks base method.
 func (m *MockSendConn) Write(arg0 []byte) error {
 	m.ctrl.T.Helper()
@@ -88,4 +100,18 @@ func (m *MockSendConn) Write(arg0 []byte) error {
 func (mr *MockSendConnMockRecorder) Write(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockSendConn)(nil).Write), arg0)
+}
+
+// WritePackets mocks base method.
+func (m *MockSendConn) WritePackets(arg0 [][]byte) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WritePackets", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// WritePackets indicates an expected call of WritePackets.
+func (mr *MockSendConnMockRecorder) WritePackets(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WritePackets", reflect.TypeOf((*MockSendConn)(nil).WritePackets), arg0)
 }

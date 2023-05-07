@@ -59,11 +59,13 @@ var _ = Describe("Client", func() {
 		addr = &net.UDPAddr{IP: net.IPv4(192, 168, 100, 200), Port: 1337}
 		packetConn = NewMockPacketConn(mockCtrl)
 		packetConn.EXPECT().LocalAddr().Return(&net.UDPAddr{}).AnyTimes()
+		rconn, err := wrapConn(packetConn)
+		Expect(err).ToNot(HaveOccurred())
 		cl = &client{
 			srcConnID:  connID,
 			destConnID: connID,
 			version:    protocol.Version1,
-			sconn:      newSendPconn(packetConn, addr),
+			sconn:      rconn,
 			tracer:     tracer,
 			logger:     utils.DefaultLogger,
 		}
@@ -512,11 +514,10 @@ var _ = Describe("Client", func() {
 
 			config := &Config{Versions: []protocol.VersionNumber{protocol.Version1}, ConnectionIDGenerator: &mockConnIDGenerator{ConnID: connID}}
 			c := make(chan struct{})
-			var cconn sendConn
 			var version protocol.VersionNumber
 			var conf *Config
 			newClientConnection = func(
-				connP sendConn,
+				_ sendConn,
 				_ connRunner,
 				_ protocol.ConnectionID,
 				_ protocol.ConnectionID,
@@ -530,7 +531,6 @@ var _ = Describe("Client", func() {
 				_ utils.Logger,
 				versionP protocol.VersionNumber,
 			) quicConn {
-				cconn = connP
 				version = versionP
 				conf = configP
 				close(c)
@@ -543,7 +543,6 @@ var _ = Describe("Client", func() {
 			_, err := Dial(packetConn, addr, "localhost:1337", tlsConf, config)
 			Expect(err).ToNot(HaveOccurred())
 			Eventually(c).Should(BeClosed())
-			Expect(cconn.(*spconn).PacketConn).To(Equal(packetConn))
 			Expect(version).To(Equal(config.Versions[0]))
 			Expect(conf.Versions).To(Equal(config.Versions))
 		})

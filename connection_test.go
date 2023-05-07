@@ -598,7 +598,7 @@ var _ = Describe("Connection", func() {
 		It("closes when the sendQueue encounters an error", func() {
 			conn.handshakeConfirmed = true
 			sconn := NewMockSendConn(mockCtrl)
-			sconn.EXPECT().Write(gomock.Any()).Return(io.ErrClosedPipe).AnyTimes()
+			sconn.EXPECT().WritePackets(gomock.Any()).Return(io.ErrClosedPipe).AnyTimes()
 			conn.sendQueue = newSendQueue(sconn)
 			sph := mockackhandler.NewMockSentPacketHandler(mockCtrl)
 			sph.EXPECT().GetLossDetectionTimeout().Return(time.Now().Add(time.Hour)).AnyTimes()
@@ -1791,7 +1791,7 @@ var _ = Describe("Connection", func() {
 		)
 
 		sent := make(chan struct{})
-		mconn.EXPECT().Write([]byte("foobar")).Do(func([]byte) { close(sent) })
+		mconn.EXPECT().WritePackets([][]byte{[]byte("foobar")}).Do(func([][]byte) { close(sent) })
 
 		go func() {
 			defer GinkgoRecover()
