@@ -13,6 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/quic-go/quic-go/congestion"
 	"github.com/quic-go/quic-go/internal/ackhandler"
 	"github.com/quic-go/quic-go/internal/flowcontrol"
 	"github.com/quic-go/quic-go/internal/handshake"
@@ -2165,14 +2166,21 @@ func (s *connection) onStreamCompleted(id protocol.StreamID) {
 	}
 }
 
+type ErrMessageTooLarge int
+
+func (e ErrMessageTooLarge) Error() string {
+	return fmt.Sprintf("message too large (maximum: %d bytes)", e)
+}
+
 func (s *connection) SendMessage(p []byte) error {
 	if !s.supportsDatagrams() {
 		return errors.New("datagram support disabled")
 	}
 
 	f := &wire.DatagramFrame{DataLenPresent: true}
-	if protocol.ByteCount(len(p)) > f.MaxDataLen(s.peerParams.MaxDatagramFrameSize, s.version) {
-		return errors.New("message too large")
+	maxDataLen := f.MaxDataLen(s.peerParams.MaxDatagramFrameSize, s.version)
+	if protocol.ByteCount(len(p)) > maxDataLen {
+		return ErrMessageTooLarge(maxDataLen)
 	}
 	f.Data = make([]byte, len(p))
 	copy(f.Data, p)
@@ -2206,4 +2214,8 @@ func (s *connection) NextConnection() Connection {
 	<-s.HandshakeComplete()
 	s.streamsMap.UseResetMaps()
 	return s
+}
+
+func (s *connection) SetCongestionControl(cc congestion.CongestionControl) {
+	s.sentPacketHandler.SetCongestionControl(cc)
 }
