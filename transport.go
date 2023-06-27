@@ -5,11 +5,7 @@ import (
 	"crypto/rand"
 	"crypto/tls"
 	"errors"
-	"log"
 	"net"
-	"os"
-	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -292,33 +288,12 @@ func (t *Transport) close(e error) {
 	t.closed = true
 }
 
-// only print warnings about the UDP receive buffer size once
-var setBufferWarningOnce sync.Once
-
 func (t *Transport) listen(conn rawConn) {
 	defer close(t.listening)
 	defer getMultiplexer().RemoveConn(t.Conn)
 
-	if err := setReceiveBuffer(t.Conn, t.logger); err != nil {
-		if !strings.Contains(err.Error(), "use of closed network connection") {
-			setBufferWarningOnce.Do(func() {
-				if disable, _ := strconv.ParseBool(os.Getenv("QUIC_GO_DISABLE_RECEIVE_BUFFER_WARNING")); disable {
-					return
-				}
-				log.Printf("%s. See https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size for details.", err)
-			})
-		}
-	}
-	if err := setSendBuffer(t.Conn, t.logger); err != nil {
-		if !strings.Contains(err.Error(), "use of closed network connection") {
-			setBufferWarningOnce.Do(func() {
-				if disable, _ := strconv.ParseBool(os.Getenv("QUIC_GO_DISABLE_RECEIVE_BUFFER_WARNING")); disable {
-					return
-				}
-				log.Printf("%s. See https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size for details.", err)
-			})
-		}
-	}
+	_ = setReceiveBuffer(t.Conn, t.logger)
+	_ = setSendBuffer(t.Conn, t.logger)
 
 	for {
 		p, err := conn.ReadPacket()
