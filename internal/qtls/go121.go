@@ -7,7 +7,7 @@ import (
 	"crypto/tls"
 	"fmt"
 
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/quic-go/quic-go/internal/protocol"
 )
 
 type (

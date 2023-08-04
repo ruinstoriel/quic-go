@@ -3,7 +3,7 @@
 package qtls
 
 import (
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/quic-go/quic-go/internal/protocol"
 
 	"github.com/quic-go/qtls-go1-20"
 

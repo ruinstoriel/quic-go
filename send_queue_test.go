@@ -3,7 +3,7 @@ package quic
 import (
 	"errors"
 
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/quic-go/quic-go/internal/protocol"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo/v2"

@@ -18,12 +18,12 @@ import (
 
 	_ "net/http/pprof"
 
-	"github.com/apernet/quic-go"
-	"github.com/apernet/quic-go/http3"
-	"github.com/apernet/quic-go/internal/testdata"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/logging"
-	"github.com/apernet/quic-go/qlog"
+	"github.com/quic-go/quic-go"
+	"github.com/quic-go/quic-go/http3"
+	"github.com/quic-go/quic-go/internal/testdata"
+	"github.com/quic-go/quic-go/internal/utils"
+	"github.com/quic-go/quic-go/logging"
+	"github.com/quic-go/quic-go/qlog"
 )
 
 type binds []string

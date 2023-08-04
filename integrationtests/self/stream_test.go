@@ -9,7 +9,7 @@ import (
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/apernet/quic-go"
+	"github.com/quic-go/quic-go"
 )
 
 var _ = Describe("Bidirectional streams", func() {

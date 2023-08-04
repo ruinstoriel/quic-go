@@ -8,10 +8,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/apernet/quic-go"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/logging"
-	"github.com/apernet/quic-go/qlog"
+	"github.com/quic-go/quic-go"
+	"github.com/quic-go/quic-go/internal/utils"
+	"github.com/quic-go/quic-go/logging"
+	"github.com/quic-go/quic-go/qlog"
 )
 
 func NewQlogger(logger io.Writer) func(context.Context, logging.Perspective, quic.ConnectionID) logging.ConnectionTracer {

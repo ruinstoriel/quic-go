@@ -1,8 +1,8 @@
 package logutils
 
 import (
-	"github.com/apernet/quic-go/internal/wire"
-	"github.com/apernet/quic-go/logging"
+	"github.com/quic-go/quic-go/internal/wire"
+	"github.com/quic-go/quic-go/logging"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
