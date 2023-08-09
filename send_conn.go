@@ -13,6 +13,7 @@ type sendConn interface {
 	Close() error
 	LocalAddr() net.Addr
 	RemoteAddr() net.Addr
+	SetRemoteAddr(net.Addr)
 
 	capabilities() connCapabilities
 }
@@ -65,6 +66,10 @@ func (c *sconn) Write(p []byte, size protocol.ByteCount) error {
 
 func (c *sconn) RemoteAddr() net.Addr {
 	return c.remoteAddr
+}
+
+func (c *sconn) SetRemoteAddr(addr net.Addr) {
+	c.remoteAddr = addr
 }
 
 func (c *sconn) LocalAddr() net.Addr {
