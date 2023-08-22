@@ -6,10 +6,10 @@ import (
 	"net"
 	"time"
 
-	"github.com/quic-go/quic-go"
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/utils"
-	"github.com/quic-go/quic-go/logging"
+	"github.com/apernet/quic-go"
+	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/apernet/quic-go/internal/utils"
+	"github.com/apernet/quic-go/logging"
 
 	"github.com/francoispqt/gojay"
 )
