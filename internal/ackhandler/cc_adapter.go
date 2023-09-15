@@ -3,8 +3,8 @@ package ackhandler
 import (
 	"time"
 
-	"github.com/quic-go/quic-go/congestion"
-	"github.com/quic-go/quic-go/internal/protocol"
+	"github.com/apernet/quic-go/congestion"
+	"github.com/apernet/quic-go/internal/protocol"
 )
 
 type ccAdapter struct {
