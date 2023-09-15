@@ -9,6 +9,7 @@ import (
 	net "net"
 	reflect "reflect"
 
+	congestion "github.com/quic-go/quic-go/congestion"
 	protocol "github.com/quic-go/quic-go/internal/protocol"
 	qerr "github.com/quic-go/quic-go/internal/qerr"
 	gomock "go.uber.org/mock/gomock"
@@ -266,6 +267,18 @@ func (m *MockQUICConn) SendMessage(arg0 []byte) error {
 func (mr *MockQUICConnMockRecorder) SendMessage(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMessage", reflect.TypeOf((*MockQUICConn)(nil).SendMessage), arg0)
+}
+
+// SetCongestionControl mocks base method.
+func (m *MockQUICConn) SetCongestionControl(arg0 congestion.CongestionControl) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetCongestionControl", arg0)
+}
+
+// SetCongestionControl indicates an expected call of SetCongestionControl.
+func (mr *MockQUICConnMockRecorder) SetCongestionControl(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetCongestionControl", reflect.TypeOf((*MockQUICConn)(nil).SetCongestionControl), arg0)
 }
 
 // destroy mocks base method.
