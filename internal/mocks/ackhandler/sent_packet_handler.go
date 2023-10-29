@@ -12,6 +12,7 @@ import (
 	reflect "reflect"
 	time "time"
 
+	congestion "github.com/quic-go/quic-go/congestion"
 	ackhandler "github.com/quic-go/quic-go/internal/ackhandler"
 	protocol "github.com/quic-go/quic-go/internal/protocol"
 	wire "github.com/quic-go/quic-go/internal/wire"
@@ -203,6 +204,18 @@ func (m *MockSentPacketHandler) SentPacket(arg0 time.Time, arg1, arg2 protocol.P
 func (mr *MockSentPacketHandlerMockRecorder) SentPacket(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SentPacket", reflect.TypeOf((*MockSentPacketHandler)(nil).SentPacket), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+}
+
+// SetCongestionControl mocks base method.
+func (m *MockSentPacketHandler) SetCongestionControl(arg0 congestion.CongestionControl) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetCongestionControl", arg0)
+}
+
+// SetCongestionControl indicates an expected call of SetCongestionControl.
+func (mr *MockSentPacketHandlerMockRecorder) SetCongestionControl(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetCongestionControl", reflect.TypeOf((*MockSentPacketHandler)(nil).SetCongestionControl), arg0)
 }
 
 // SetHandshakeConfirmed mocks base method.
