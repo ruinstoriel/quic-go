@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/francoispqt/gojay v1.2.13
+	github.com/golang/mock v1.2.0
 	github.com/onsi/ginkgo/v2 v2.9.5
 	github.com/onsi/gomega v1.27.6
 	github.com/quic-go/qpack v0.4.0
