@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/quic-go/quic-go"
-	"github.com/quic-go/quic-go/internal/qerr"
+	"github.com/apernet/quic-go"
+	"github.com/apernet/quic-go/internal/qerr"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
