@@ -6,9 +6,9 @@ import (
 	"math"
 	"net/http"
 
-	mockquic "github.com/quic-go/quic-go/internal/mocks/quic"
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/qerr"
+	mockquic "github.com/apernet/quic-go/internal/mocks/quic"
+	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/apernet/quic-go/internal/qerr"
 
 	"github.com/quic-go/qpack"
 
