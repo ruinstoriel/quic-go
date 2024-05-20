@@ -212,15 +212,13 @@ func (c *connection) HandleUnidirectionalStreams(hijack func(StreamType, quic.Co
 				c.Connection.CloseWithError(quic.ApplicationErrorCode(ErrCodeSettingsError), "missing QUIC Datagram support")
 				return
 			}
-			if c.enableDatagrams {
-				go func() {
-					if err := c.receiveDatagrams(); err != nil {
-						if c.logger != nil {
-							c.logger.Debug("receiving datagrams failed", "error", err)
-						}
+			go func() {
+				if err := c.receiveDatagrams(); err != nil {
+					if c.logger != nil {
+						c.logger.Debug("receiving datagrams failed", "error", err)
 					}
-				}()
-			}
+				}
+			}()
 		}(str)
 	}
 }
