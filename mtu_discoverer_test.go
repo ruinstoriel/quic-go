@@ -4,9 +4,9 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/utils"
-	"github.com/quic-go/quic-go/logging"
+	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/apernet/quic-go/internal/utils"
+	"github.com/apernet/quic-go/logging"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
