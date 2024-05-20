@@ -13,8 +13,8 @@ type (
 
 // Expose some constants from protocol that congestion control algorithms may need.
 const (
-	InitialPacketSizeIPv4      = protocol.InitialPacketSizeIPv4
-	InitialPacketSizeIPv6      = protocol.InitialPacketSizeIPv6
+	InitialPacketSizeIPv4      = protocol.InitialPacketSize
+	InitialPacketSizeIPv6      = protocol.InitialPacketSize
 	MinPacingDelay             = protocol.MinPacingDelay
 	MaxPacketBufferSize        = protocol.MaxPacketBufferSize
 	MinInitialPacketSize       = protocol.MinInitialPacketSize
