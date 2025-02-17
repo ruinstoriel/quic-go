@@ -7,7 +7,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/quic-go/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 )
 
 const (
