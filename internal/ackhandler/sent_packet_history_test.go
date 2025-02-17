@@ -1,7 +1,6 @@
 package ackhandler
 
 import (
-	"errors"
 	"testing"
 	"time"
 
@@ -150,52 +149,16 @@ func TestSentPacketHistoryIterating(t *testing.T) {
 	require.NoError(t, hist.Remove(4))
 
 	var packets, skippedPackets []protocol.PacketNumber
-	require.NoError(t, hist.Iterate(func(p *packet) (bool, error) {
+	for p := range hist.Packets() {
 		if p.skippedPacket {
 			skippedPackets = append(skippedPackets, p.PacketNumber)
 		} else {
 			packets = append(packets, p.PacketNumber)
 		}
-		return true, nil
-	}))
+	}
 
 	require.Equal(t, []protocol.PacketNumber{1, 2, 6}, packets)
 	require.Equal(t, []protocol.PacketNumber{0, 5}, skippedPackets)
-}
-
-func TestSentPacketHistoryStopIterating(t *testing.T) {
-	hist := newSentPacketHistory(true)
-	hist.SkippedPacket(0)
-	hist.SentAckElicitingPacket(&packet{PacketNumber: 1})
-	hist.SentAckElicitingPacket(&packet{PacketNumber: 2})
-
-	var iterations []protocol.PacketNumber
-	require.NoError(t, hist.Iterate(func(p *packet) (bool, error) {
-		if p.skippedPacket {
-			return true, nil
-		}
-		iterations = append(iterations, p.PacketNumber)
-		return p.PacketNumber < 1, nil
-	}))
-	require.Equal(t, []protocol.PacketNumber{1}, iterations)
-}
-
-func TestSentPacketHistoryIterateError(t *testing.T) {
-	hist := newSentPacketHistory(true)
-	hist.SentAckElicitingPacket(&packet{PacketNumber: 0})
-	hist.SentAckElicitingPacket(&packet{PacketNumber: 1})
-	hist.SentAckElicitingPacket(&packet{PacketNumber: 2})
-
-	testErr := errors.New("test error")
-	var iterations []protocol.PacketNumber
-	require.Equal(t, testErr, hist.Iterate(func(p *packet) (bool, error) {
-		iterations = append(iterations, p.PacketNumber)
-		if p.PacketNumber == 1 {
-			return false, testErr
-		}
-		return true, nil
-	}))
-	require.Equal(t, []protocol.PacketNumber{0, 1}, iterations)
 }
 
 func TestSentPacketHistoryDeleteWhileIterating(t *testing.T) {
@@ -208,7 +171,7 @@ func TestSentPacketHistoryDeleteWhileIterating(t *testing.T) {
 	hist.SentAckElicitingPacket(&packet{PacketNumber: 5})
 
 	var iterations []protocol.PacketNumber
-	require.NoError(t, hist.Iterate(func(p *packet) (bool, error) {
+	for p := range hist.Packets() {
 		iterations = append(iterations, p.PacketNumber)
 		switch p.PacketNumber {
 		case 0:
@@ -216,10 +179,99 @@ func TestSentPacketHistoryDeleteWhileIterating(t *testing.T) {
 		case 4:
 			require.NoError(t, hist.Remove(4))
 		}
-		return true, nil
-	}))
+	}
 
 	require.Equal(t, []protocol.PacketNumber{0, 1, 2, 3, 4, 5}, iterations)
 	require.Equal(t, []protocol.PacketNumber{1, 3, 5}, hist.getPacketNumbers())
 	require.Equal(t, []protocol.PacketNumber{2}, hist.getSkippedPacketNumbers())
+}
+
+func TestSentPacketHistoryPathProbes(t *testing.T) {
+	hist := newSentPacketHistory(true)
+	hist.SentAckElicitingPacket(&packet{PacketNumber: 0})
+	hist.SentAckElicitingPacket(&packet{PacketNumber: 1})
+	hist.SentPathProbePacket(&packet{PacketNumber: 2})
+	hist.SentAckElicitingPacket(&packet{PacketNumber: 3})
+	hist.SentAckElicitingPacket(&packet{PacketNumber: 4})
+	hist.SentPathProbePacket(&packet{PacketNumber: 5})
+
+	getPacketsInHistory := func(t *testing.T) []protocol.PacketNumber {
+		t.Helper()
+		var pns []protocol.PacketNumber
+		for p := range hist.Packets() {
+			pns = append(pns, p.PacketNumber)
+			switch p.PacketNumber {
+			case 2, 5:
+				require.True(t, p.isPathProbePacket)
+			default:
+				require.False(t, p.isPathProbePacket)
+			}
+		}
+		return pns
+	}
+
+	getPacketsInPathProbeHistory := func(t *testing.T) []protocol.PacketNumber {
+		t.Helper()
+		var pns []protocol.PacketNumber
+		for p := range hist.PathProbes() {
+			pns = append(pns, p.PacketNumber)
+		}
+		return pns
+	}
+
+	require.Equal(t, []protocol.PacketNumber{0, 1, 2, 3, 4, 5}, getPacketsInHistory(t))
+	require.Equal(t, []protocol.PacketNumber{2, 5}, getPacketsInPathProbeHistory(t))
+
+	// Removing packets from the regular packet history might happen before the path probe
+	// is declared lost, as the original path might have a smaller RTT than the path timeout.
+	// Therefore, the path probe packet is not removed from the path probe history.
+	require.NoError(t, hist.Remove(0))
+	require.NoError(t, hist.Remove(1))
+	require.NoError(t, hist.Remove(2))
+	require.NoError(t, hist.Remove(3))
+	require.Equal(t, []protocol.PacketNumber{4, 5}, getPacketsInHistory(t))
+	require.Equal(t, []protocol.PacketNumber{2, 5}, getPacketsInPathProbeHistory(t))
+	require.True(t, hist.HasOutstandingPackets())
+	require.True(t, hist.HasOutstandingPathProbes())
+	firstOutstanding := hist.FirstOutstanding()
+	require.NotNil(t, firstOutstanding)
+	require.Equal(t, protocol.PacketNumber(4), firstOutstanding.PacketNumber)
+	firstOutStandingPathProbe := hist.FirstOutstandingPathProbe()
+	require.NotNil(t, firstOutStandingPathProbe)
+	require.Equal(t, protocol.PacketNumber(2), firstOutStandingPathProbe.PacketNumber)
+
+	hist.RemovePathProbe(2)
+	require.Equal(t, []protocol.PacketNumber{4, 5}, getPacketsInHistory(t))
+	require.Equal(t, []protocol.PacketNumber{5}, getPacketsInPathProbeHistory(t))
+	require.True(t, hist.HasOutstandingPathProbes())
+	firstOutStandingPathProbe = hist.FirstOutstandingPathProbe()
+	require.NotNil(t, firstOutStandingPathProbe)
+	require.Equal(t, protocol.PacketNumber(5), firstOutStandingPathProbe.PacketNumber)
+
+	hist.RemovePathProbe(5)
+	require.Equal(t, []protocol.PacketNumber{4, 5}, getPacketsInHistory(t))
+	require.Empty(t, getPacketsInPathProbeHistory(t))
+	require.True(t, hist.HasOutstandingPackets())
+	require.False(t, hist.HasOutstandingPathProbes())
+	require.Nil(t, hist.FirstOutstandingPathProbe())
+
+	require.NoError(t, hist.Remove(4))
+	require.NoError(t, hist.Remove(5))
+	require.Empty(t, getPacketsInHistory(t))
+	require.False(t, hist.HasOutstandingPackets())
+	require.Nil(t, hist.FirstOutstanding())
+
+	// path probe packets are considered outstanding
+	hist.SentPathProbePacket(&packet{PacketNumber: 6})
+	require.False(t, hist.HasOutstandingPackets())
+	require.True(t, hist.HasOutstandingPathProbes())
+	firstOutStandingPathProbe = hist.FirstOutstandingPathProbe()
+	require.NotNil(t, firstOutStandingPathProbe)
+	require.Equal(t, protocol.PacketNumber(6), firstOutStandingPathProbe.PacketNumber)
+
+	hist.RemovePathProbe(6)
+	require.False(t, hist.HasOutstandingPackets())
+	require.Nil(t, hist.FirstOutstanding())
+	require.False(t, hist.HasOutstandingPathProbes())
+	require.Nil(t, hist.FirstOutstandingPathProbe())
 }

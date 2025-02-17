@@ -17,7 +17,7 @@ func TestMTUDiscovererTiming(t *testing.T) {
 	const rtt = 100 * time.Millisecond
 	var rttStats utils.RTTStats
 	rttStats.UpdateRTT(rtt, 0)
-	d := newMTUDiscoverer(&rttStats, 1000, 2000, func(s protocol.ByteCount) {}, nil)
+	d := newMTUDiscoverer(&rttStats, 1000, 2000, nil)
 
 	now := time.Now()
 	require.False(t, d.ShouldSendProbe(now))
@@ -37,21 +37,20 @@ func TestMTUDiscovererTiming(t *testing.T) {
 }
 
 func TestMTUDiscovererAckAndLoss(t *testing.T) {
-	var mtu protocol.ByteCount
-	d := newMTUDiscoverer(&utils.RTTStats{}, 1000, 2000, func(s protocol.ByteCount) { mtu = s }, nil)
+	d := newMTUDiscoverer(&utils.RTTStats{}, 1000, 2000, nil)
 	// we use an RTT of 0 here, so we don't have to advance the timer on every step
 	now := time.Now()
 	ping, size := d.GetPing(now)
 	require.Equal(t, protocol.ByteCount(1500), size)
 	// the MTU is reduced if the frame is lost
 	ping.Handler.OnLost(ping.Frame)
-	require.Zero(t, mtu) // no change to the MTU yet
+	require.Equal(t, protocol.ByteCount(1000), d.CurrentSize()) // no change to the MTU yet
 
 	require.True(t, d.ShouldSendProbe(now))
 	ping, size = d.GetPing(now)
 	require.Equal(t, protocol.ByteCount(1250), size)
 	ping.Handler.OnAcked(ping.Frame)
-	require.Equal(t, protocol.ByteCount(1250), mtu) // the MTU is increased
+	require.Equal(t, protocol.ByteCount(1250), d.CurrentSize()) // the MTU is increased
 
 	// Even though the 1500 byte MTU probe packet was lost, we try again with a higher MTU.
 	// This protects against regular (non-MTU-related) packet loss.
@@ -59,7 +58,7 @@ func TestMTUDiscovererAckAndLoss(t *testing.T) {
 	ping, size = d.GetPing(now)
 	require.Greater(t, size, protocol.ByteCount(1500))
 	ping.Handler.OnAcked(ping.Frame)
-	require.Equal(t, size, mtu)
+	require.Equal(t, size, d.CurrentSize())
 
 	// We continue probing until the MTU is close to the maximum.
 	var steps int
@@ -91,13 +90,9 @@ func testMTUDiscovererMTUDiscovery(t *testing.T) {
 	rttStats.UpdateRTT(rtt, 0)
 
 	maxMTU := protocol.ByteCount(rand.IntN(int(3000-startMTU))) + startMTU + 1
-	currentMTU := startMTU
 	var tracedMTU protocol.ByteCount
 	var tracerDone bool
-	d := newMTUDiscoverer(
-		&rttStats,
-		startMTU, maxMTU,
-		func(s protocol.ByteCount) { currentMTU = s },
+	d := newMTUDiscoverer(&rttStats, startMTU, maxMTU,
 		&logging.ConnectionTracer{
 			UpdatedMTU: func(mtu logging.ByteCount, done bool) {
 				tracedMTU = mtu
@@ -122,6 +117,7 @@ func testMTUDiscovererMTUDiscovery(t *testing.T) {
 		}
 		now = now.Add(mtuProbeDelay * rtt)
 	}
+	currentMTU := d.CurrentSize()
 	diff := realMTU - currentMTU
 	require.GreaterOrEqual(t, diff, protocol.ByteCount(0))
 	if maxMTU > currentMTU+maxMTU {
@@ -151,15 +147,10 @@ func testMTUDiscovererWithRandomLoss(t *testing.T) {
 	require.Equal(t, rtt, rttStats.SmoothedRTT())
 
 	maxMTU := protocol.ByteCount(rand.IntN(int(3000-startMTU))) + startMTU + 1
-	currentMTU := startMTU
 	var tracedMTU protocol.ByteCount
 	var tracerDone bool
 
-	d := newMTUDiscoverer(
-		rttStats,
-		startMTU,
-		maxMTU,
-		func(s protocol.ByteCount) { currentMTU = s },
+	d := newMTUDiscoverer(rttStats, startMTU, maxMTU,
 		&logging.ConnectionTracer{
 			UpdatedMTU: func(mtu logging.ByteCount, done bool) {
 				tracedMTU = mtu
@@ -195,6 +186,7 @@ func testMTUDiscovererWithRandomLoss(t *testing.T) {
 		now = now.Add(mtuProbeDelay * rtt)
 	}
 
+	currentMTU := d.CurrentSize()
 	diff := realMTU - currentMTU
 	require.GreaterOrEqual(t, diff, protocol.ByteCount(0))
 	if maxMTU > currentMTU+maxMTU {
@@ -204,4 +196,54 @@ func testMTUDiscovererWithRandomLoss(t *testing.T) {
 	t.Logf("MTU discovered with random losses %v: %d (diff: %d)", randomLosses, currentMTU, diff)
 	t.Logf("probes sent (%d): %v", len(probes), probes)
 	require.LessOrEqual(t, diff, maxMTUDiff)
+}
+
+func TestMTUDiscovererReset(t *testing.T) {
+	t.Run("probe on old path acknowledged", func(t *testing.T) {
+		testMTUDiscovererReset(t, true)
+	})
+	t.Run("probe on old path lost", func(t *testing.T) {
+		testMTUDiscovererReset(t, false)
+	})
+}
+
+func testMTUDiscovererReset(t *testing.T, ackLastProbe bool) {
+	const startMTU protocol.ByteCount = 1000
+	const maxMTU = 1400
+	const rtt = 100 * time.Millisecond
+
+	rttStats := &utils.RTTStats{}
+	rttStats.SetInitialRTT(rtt)
+
+	now := time.Now()
+	d := newMTUDiscoverer(rttStats, startMTU, maxMTU, nil)
+	d.Start(now)
+
+	ping, _ := d.GetPing(now.Add(5 * rtt))
+	ping.Handler.OnAcked(ping.Frame)
+	require.Greater(t, d.CurrentSize(), startMTU)
+	now = now.Add(5 * rtt)
+
+	// send another probe packet, but neither acknowledge nor lose it before resetting
+	ping, _ = d.GetPing(now.Add(5 * rtt))
+	now = now.Add(2 * rtt) // advance the timer by an arbitrary amount
+
+	const newStartMTU protocol.ByteCount = 900
+	const newMaxMTU = 1500
+	d.Reset(now, newStartMTU, newMaxMTU)
+	require.Equal(t, d.CurrentSize(), newStartMTU)
+
+	// Now acknowledge / lose the probe packet.
+	// This should be ignored, since it's on the old path.
+	if ackLastProbe {
+		ping.Handler.OnAcked(ping.Frame)
+	} else {
+		ping.Handler.OnLost(ping.Frame)
+	}
+
+	// the MTU should not have changed
+	require.Equal(t, d.CurrentSize(), newStartMTU)
+	// the next probe should be sent after 5 RTTs
+	require.False(t, d.ShouldSendProbe(now.Add(5*rtt).Add(-time.Microsecond)))
+	require.True(t, d.ShouldSendProbe(now.Add(5*rtt)))
 }
