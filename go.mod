@@ -1,6 +1,6 @@
 module github.com/ruinstoriel/quic-go
 
-go 1.23
+go 1.24
 
 require (
 	github.com/francoispqt/gojay v1.2.13
