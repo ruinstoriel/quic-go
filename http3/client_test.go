@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/quic-go/qpack"
-	"github.com/quic-go/quic-go"
-	mockquic "github.com/quic-go/quic-go/internal/mocks/quic"
-	"github.com/quic-go/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go"
+	mockquic "github.com/ruinstoriel/quic-go/internal/mocks/quic"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
