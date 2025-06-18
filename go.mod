@@ -1,4 +1,4 @@
-module github.com/quic-go/quic-go
+module github.com/ruinstoriel/quic-go
 
 go 1.23
 
