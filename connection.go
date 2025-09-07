@@ -14,6 +14,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/quic-go/quic-go/congestion"
 	"github.com/quic-go/quic-go/internal/ackhandler"
 	"github.com/quic-go/quic-go/internal/flowcontrol"
 	"github.com/quic-go/quic-go/internal/handshake"
@@ -319,6 +320,9 @@ var newConnection = func(
 	}
 	if s.config.EnableDatagrams {
 		params.MaxDatagramFrameSize = wire.MaxDatagramSize
+		if s.config.MaxDatagramFrameSize != 0 {
+			params.MaxDatagramFrameSize = protocol.ByteCount(s.config.MaxDatagramFrameSize)
+		}
 	} else {
 		params.MaxDatagramFrameSize = protocol.InvalidByteCount
 	}
@@ -430,6 +434,9 @@ var newClientConnection = func(
 	}
 	if s.config.EnableDatagrams {
 		params.MaxDatagramFrameSize = wire.MaxDatagramSize
+		if s.config.MaxDatagramFrameSize != 0 {
+			params.MaxDatagramFrameSize = protocol.ByteCount(s.config.MaxDatagramFrameSize)
+		}
 	} else {
 		params.MaxDatagramFrameSize = protocol.InvalidByteCount
 	}
@@ -1070,6 +1077,11 @@ func (c *Conn) handleShortHeaderPacket(p receivedPacket, isCoalesced bool) (wasP
 		return true, nil
 	}
 	if addrsEqual(p.remoteAddr, c.RemoteAddr()) {
+		return true, nil
+	}
+	if c.config.DisablePathManager {
+		// Hysteria port hopping
+		c.conn.ChangeRemoteAddr(p.remoteAddr, p.info)
 		return true, nil
 	}
 
@@ -2707,4 +2719,19 @@ func (c *Conn) NextConnection(ctx context.Context) (*Conn, error) {
 // connection ID length), and the size of the encryption tag.
 func estimateMaxPayloadSize(mtu protocol.ByteCount) protocol.ByteCount {
 	return mtu - 1 /* type byte */ - 20 /* maximum connection ID length */ - 16 /* tag size */
+}
+
+// SetCongestionControl replace the current congestion control algorithm with a new one.
+func (c *Conn) SetCongestionControl(cc congestion.CongestionControl) {
+	c.sentPacketHandler.SetCongestionControl(cc)
+}
+
+// SetRemoteAddr Replace the current remote addr with a new one
+func (c *Conn) SetRemoteAddr(addr net.Addr) {
+	c.conn.SetRemoteAddr(addr)
+}
+
+// Config Return current config
+func (c *Conn) Config() *Config {
+	return c.config
 }
