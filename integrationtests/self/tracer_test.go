@@ -11,12 +11,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/quic-go/quic-go"
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/utils"
-	"github.com/quic-go/quic-go/logging"
-	"github.com/quic-go/quic-go/metrics"
-	"github.com/quic-go/quic-go/qlog"
+	"github.com/ruinstoriel/quic-go"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/logging"
+	"github.com/ruinstoriel/quic-go/metrics"
+	"github.com/ruinstoriel/quic-go/qlog"
 
 	"github.com/stretchr/testify/require"
 )

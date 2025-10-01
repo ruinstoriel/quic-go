@@ -13,8 +13,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/quic-go/quic-go"
-	"github.com/quic-go/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 
 	"github.com/quic-go/qpack"
 )
