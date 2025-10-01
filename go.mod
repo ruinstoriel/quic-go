@@ -3,6 +3,7 @@ module github.com/ruinstoriel/quic-go
 go 1.24
 
 require (
+
 	github.com/francoispqt/gojay v1.2.13
 	github.com/prometheus/client_golang v1.19.1
 	github.com/quic-go/qpack v0.5.1
