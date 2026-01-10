@@ -191,6 +191,9 @@ type Config struct {
 	EnableStreamResetPartialDelivery bool
 
 	Tracer func(ctx context.Context, isClient bool, connID ConnectionID) qlogwriter.Trace
+
+	MaxDatagramFrameSize int64
+	DisablePathManager   bool
 }
 
 // ClientHelloInfo contains information about an incoming connection attempt.
