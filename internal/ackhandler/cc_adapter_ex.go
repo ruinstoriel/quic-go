@@ -17,15 +17,15 @@ type ccAdapterEx struct {
 }
 
 func (a *ccAdapterEx) TimeUntilSend(bytesInFlight protocol.ByteCount) monotime.Time {
-	return monotime.FromTime(a.CC.TimeUntilSend(congestion.ByteCount(bytesInFlight)))
+	return a.CC.TimeUntilSend(congestion.ByteCount(bytesInFlight))
 }
 
 func (a *ccAdapterEx) HasPacingBudget(now monotime.Time) bool {
-	return a.CC.HasPacingBudget(now.ToTime())
+	return a.CC.HasPacingBudget(now)
 }
 
 func (a *ccAdapterEx) OnPacketSent(sentTime monotime.Time, bytesInFlight protocol.ByteCount, packetNumber protocol.PacketNumber, bytes protocol.ByteCount, isRetransmittable bool) {
-	a.CC.OnPacketSent(sentTime.ToTime(), congestion.ByteCount(bytesInFlight), congestion.PacketNumber(packetNumber), congestion.ByteCount(bytes), isRetransmittable)
+	a.CC.OnPacketSent(sentTime, congestion.ByteCount(bytesInFlight), congestion.PacketNumber(packetNumber), congestion.ByteCount(bytes), isRetransmittable)
 }
 
 func (a *ccAdapterEx) CanSend(bytesInFlight protocol.ByteCount) bool {
@@ -37,7 +37,7 @@ func (a *ccAdapterEx) MaybeExitSlowStart() {
 }
 
 func (a *ccAdapterEx) OnPacketAcked(number protocol.PacketNumber, ackedBytes protocol.ByteCount, priorInFlight protocol.ByteCount, eventTime monotime.Time) {
-	a.CC.OnPacketAcked(congestion.PacketNumber(number), congestion.ByteCount(ackedBytes), congestion.ByteCount(priorInFlight), eventTime.ToTime())
+	a.CC.OnPacketAcked(congestion.PacketNumber(number), congestion.ByteCount(ackedBytes), congestion.ByteCount(priorInFlight), eventTime)
 }
 
 func (a *ccAdapterEx) OnCongestionEvent(number protocol.PacketNumber, lostBytes protocol.ByteCount, priorInFlight protocol.ByteCount) {
@@ -45,7 +45,7 @@ func (a *ccAdapterEx) OnCongestionEvent(number protocol.PacketNumber, lostBytes 
 }
 
 func (a *ccAdapterEx) OnCongestionEventEx(priorInFlight protocol.ByteCount, eventTime monotime.Time, ackedPackets []congestion.AckedPacketInfo, lostPackets []congestion.LostPacketInfo) {
-	a.CC.OnCongestionEventEx(congestion.ByteCount(priorInFlight), eventTime.ToTime(), ackedPackets, lostPackets)
+	a.CC.OnCongestionEventEx(congestion.ByteCount(priorInFlight), eventTime, ackedPackets, lostPackets)
 }
 
 func (a *ccAdapterEx) OnRetransmissionTimeout(packetsRetransmitted bool) {
