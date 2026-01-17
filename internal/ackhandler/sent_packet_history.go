@@ -5,7 +5,7 @@ import (
 	"iter"
 	"slices"
 
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 )
 
 const maxSkippedPackets = 4

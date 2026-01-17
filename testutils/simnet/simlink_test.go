@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apernet/quic-go/internal/synctest"
+	"github.com/ruinstoriel/quic-go/internal/synctest"
 )
 
 type testRouter struct {

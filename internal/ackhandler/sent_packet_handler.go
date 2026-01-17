@@ -6,15 +6,15 @@ import (
 	"sync"
 	"time"
 
-	congestionExt "github.com/apernet/quic-go/congestion"
-	"github.com/apernet/quic-go/internal/congestion"
-	"github.com/apernet/quic-go/internal/monotime"
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/qerr"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/internal/wire"
-	"github.com/apernet/quic-go/qlog"
-	"github.com/apernet/quic-go/qlogwriter"
+	congestionExt "github.com/ruinstoriel/quic-go/congestion"
+	"github.com/ruinstoriel/quic-go/internal/congestion"
+	"github.com/ruinstoriel/quic-go/internal/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/qerr"
+	"github.com/ruinstoriel/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/internal/wire"
+	"github.com/ruinstoriel/quic-go/qlog"
+	"github.com/ruinstoriel/quic-go/qlogwriter"
 )
 
 const (

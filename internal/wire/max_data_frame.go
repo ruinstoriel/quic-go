@@ -1,8 +1,8 @@
 package wire
 
 import (
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 )
 
 // A MaxDataFrame carries flow control information for the connection

@@ -1,6 +1,6 @@
 package wire
 
-import "github.com/apernet/quic-go/internal/protocol"
+import "github.com/ruinstoriel/quic-go/internal/protocol"
 
 type FrameType uint64
 

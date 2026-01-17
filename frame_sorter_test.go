@@ -7,9 +7,9 @@ import (
 	mrand "math/rand/v2"
 	"testing"
 
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/internal/utils/tree"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/internal/utils/tree"
 
 	"github.com/stretchr/testify/require"
 )

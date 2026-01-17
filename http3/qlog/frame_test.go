@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/apernet/quic-go/qlogwriter/jsontext"
+	"github.com/ruinstoriel/quic-go/qlogwriter/jsontext"
 
 	"github.com/stretchr/testify/require"
 )
