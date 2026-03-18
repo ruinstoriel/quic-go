@@ -6,8 +6,8 @@ import argparse
 import fileinput
 
 
-PKG_ORIGINAL = "github.com/quic-go/quic-go"
-PKG_NEW = "github.com/apernet/quic-go"
+PKG_ORIGINAL = "github.com/apernet/quic-go"
+PKG_NEW = "github.com/ruinstoriel/quic-go"
 
 EXTENSIONS = [".go", ".md", ".mod", ".sh"]
 

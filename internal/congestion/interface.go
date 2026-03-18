@@ -1,9 +1,9 @@
 package congestion
 
 import (
-	"github.com/apernet/quic-go/congestion"
-	"github.com/apernet/quic-go/internal/monotime"
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/congestion"
+	"github.com/ruinstoriel/quic-go/internal/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 )
 
 // A SendAlgorithm performs congestion control

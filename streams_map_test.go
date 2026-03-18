@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apernet/quic-go/internal/flowcontrol"
-	"github.com/apernet/quic-go/internal/mocks"
-	"github.com/apernet/quic-go/internal/monotime"
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/qerr"
-	"github.com/apernet/quic-go/internal/wire"
+	"github.com/ruinstoriel/quic-go/internal/flowcontrol"
+	"github.com/ruinstoriel/quic-go/internal/mocks"
+	"github.com/ruinstoriel/quic-go/internal/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/qerr"
+	"github.com/ruinstoriel/quic-go/internal/wire"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -11,11 +11,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apernet/quic-go"
-	"github.com/apernet/quic-go/http3/qlog"
-	"github.com/apernet/quic-go/qlogwriter"
-	"github.com/apernet/quic-go/quicvarint"
-	"github.com/apernet/quic-go/testutils/events"
+	"github.com/ruinstoriel/quic-go"
+	"github.com/ruinstoriel/quic-go/http3/qlog"
+	"github.com/ruinstoriel/quic-go/qlogwriter"
+	"github.com/ruinstoriel/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go/testutils/events"
 	"github.com/quic-go/qpack"
 
 	"github.com/stretchr/testify/require"

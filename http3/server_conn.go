@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/apernet/quic-go"
-	"github.com/apernet/quic-go/qlogwriter"
+	"github.com/ruinstoriel/quic-go"
+	"github.com/ruinstoriel/quic-go/qlogwriter"
 	"github.com/quic-go/qpack"
 )
 
