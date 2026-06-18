@@ -22,7 +22,7 @@ func TestHTTPSettings(t *testing.T) {
 	port := startHTTPServer(t, mux)
 
 	t.Run("server settings", func(t *testing.T) {
-		tlsConf := tlsClientConfigWithoutServerName.Clone()
+		tlsConf := getTLSClientConfig()
 		tlsConf.NextProtos = []string{http3.NextProtoH3}
 		conn, err := quic.DialAddr(
 			context.Background(),
@@ -95,7 +95,7 @@ func dialAndOpenHTTPDatagramStream(t *testing.T, addr string) *http3.RequestStre
 	u, err := url.Parse(addr)
 	require.NoError(t, err)
 
-	tlsConf := getTLSClientConfigWithoutServerName()
+	tlsConf := getTLSClientConfig()
 	tlsConf.NextProtos = []string{http3.NextProtoH3}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()

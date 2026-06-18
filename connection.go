@@ -14,6 +14,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/quic-go/quic-go/congestion"
 	"github.com/quic-go/quic-go/internal/ackhandler"
 	"github.com/quic-go/quic-go/internal/flowcontrol"
 	"github.com/quic-go/quic-go/internal/handshake"
@@ -347,8 +348,11 @@ var newConnection = func(
 		RetrySourceConnectionID:   retrySrcConnID,
 		EnableResetStreamAt:       conf.EnableStreamResetPartialDelivery,
 	}
-	if s.config.EnableDatagrams {
+	if s.config.EnableDatagrams && !s.config.OmitMaxDatagramFrameSize {
 		params.MaxDatagramFrameSize = wire.MaxDatagramSize
+		if s.config.MaxDatagramFrameSize != 0 {
+			params.MaxDatagramFrameSize = protocol.ByteCount(s.config.MaxDatagramFrameSize)
+		}
 	} else {
 		params.MaxDatagramFrameSize = protocol.InvalidByteCount
 	}
@@ -473,8 +477,11 @@ var newClientConnection = func(
 		InitialSourceConnectionID: srcConnID,
 		EnableResetStreamAt:       conf.EnableStreamResetPartialDelivery,
 	}
-	if s.config.EnableDatagrams {
+	if s.config.EnableDatagrams && !s.config.OmitMaxDatagramFrameSize {
 		params.MaxDatagramFrameSize = wire.MaxDatagramSize
+		if s.config.MaxDatagramFrameSize != 0 {
+			params.MaxDatagramFrameSize = protocol.ByteCount(s.config.MaxDatagramFrameSize)
+		}
 	} else {
 		params.MaxDatagramFrameSize = protocol.InvalidByteCount
 	}
@@ -767,7 +774,17 @@ func (c *Conn) Context() context.Context {
 }
 
 func (c *Conn) supportsDatagrams() bool {
-	return c.peerParams.MaxDatagramFrameSize > 0
+	return c.peerMaxDatagramFrameSize() > 0
+}
+
+func (c *Conn) peerMaxDatagramFrameSize() protocol.ByteCount {
+	if c.peerParams.MaxDatagramFrameSize > 0 {
+		return c.peerParams.MaxDatagramFrameSize
+	}
+	if c.config.EnableDatagrams && c.config.AssumePeerMaxDatagramFrameSize > 0 {
+		return protocol.ByteCount(c.config.AssumePeerMaxDatagramFrameSize)
+	}
+	return protocol.InvalidByteCount
 }
 
 // ConnectionState returns basic details about the QUIC connection.
@@ -1263,6 +1280,11 @@ func (c *Conn) handleShortHeaderPacket(
 		return true, nil
 	}
 	if addrsEqual(p.remoteAddr, c.RemoteAddr()) {
+		return true, nil
+	}
+	if c.config.DisablePathManager {
+		// for hysteria2 port hopping, direct change remote address without connection migration logic
+		c.conn.ChangeRemoteAddr(p.remoteAddr, p.info)
 		return true, nil
 	}
 
@@ -3029,10 +3051,11 @@ func (c *Conn) SendDatagram(p []byte) error {
 	}
 
 	f := &wire.DatagramFrame{DataLenPresent: true}
+	maxDatagramFrameSize := c.peerMaxDatagramFrameSize()
 	// The payload size estimate is conservative.
 	// Under many circumstances we could send a few more bytes.
 	maxDataLen := min(
-		f.MaxDataLen(c.peerParams.MaxDatagramFrameSize, c.version),
+		f.MaxDataLen(maxDatagramFrameSize, c.version),
 		protocol.ByteCount(c.maxPayloadSizeEstimate.Load()),
 	)
 	if protocol.ByteCount(len(p)) > maxDataLen {
@@ -3146,4 +3169,19 @@ func (c *Conn) NextConnection(ctx context.Context) (*Conn, error) {
 // connection ID length), and the size of the encryption tag.
 func estimateMaxPayloadSize(mtu protocol.ByteCount) protocol.ByteCount {
 	return mtu - 1 /* type byte */ - 20 /* maximum connection ID length */ - 16 /* tag size */
+}
+
+// SetCongestionControl replace the current congestion control algorithm with a new one.
+func (c *Conn) SetCongestionControl(cc congestion.CongestionControl) {
+	c.sentPacketHandler.SetCongestionControl(cc)
+}
+
+// SetRemoteAddr Replace the current remote addr with a new one
+func (c *Conn) SetRemoteAddr(addr net.Addr) {
+	c.conn.SetRemoteAddr(addr)
+}
+
+// Config Return current config
+func (c *Conn) Config() *Config {
+	return c.config
 }

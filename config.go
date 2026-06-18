@@ -120,10 +120,14 @@ func populateConfig(config *Config) *Config {
 		MaxIncomingUniStreams:            maxIncomingUniStreams,
 		TokenStore:                       config.TokenStore,
 		EnableDatagrams:                  config.EnableDatagrams,
+		OmitMaxDatagramFrameSize:         config.OmitMaxDatagramFrameSize,
+		AssumePeerMaxDatagramFrameSize:   config.AssumePeerMaxDatagramFrameSize,
 		InitialPacketSize:                initialPacketSize,
 		DisablePathMTUDiscovery:          config.DisablePathMTUDiscovery,
 		EnableStreamResetPartialDelivery: config.EnableStreamResetPartialDelivery,
 		Allow0RTT:                        config.Allow0RTT,
 		Tracer:                           config.Tracer,
+		MaxDatagramFrameSize:             config.MaxDatagramFrameSize,
+		DisablePathManager:               config.DisablePathManager,
 	}
 }
