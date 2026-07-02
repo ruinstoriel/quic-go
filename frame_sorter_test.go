@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	ossfuzzseeds "github.com/quic-go/go-ossfuzz-seeds"
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 
 	"github.com/stretchr/testify/require"
 )

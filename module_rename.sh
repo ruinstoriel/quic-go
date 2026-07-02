@@ -10,8 +10,8 @@
 # Hidden directories (.git, .github, .clusterfuzzlite, ...) are skipped.
 set -eu
 
-upstream="github.com/quic-go/quic-go"
-fork="github.com/apernet/quic-go"
+upstream="github.com/ruinstoriel/quic-go"
+fork="github.com/ruinstoriel/quic-go"
 
 from="$upstream"
 to="$fork"

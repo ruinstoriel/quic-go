@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 )
 
 // used for QUIC v1 (RFC 9000)

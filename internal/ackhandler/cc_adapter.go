@@ -1,10 +1,10 @@
 package ackhandler
 
 import (
-	"github.com/apernet/quic-go/congestion"
-	cgInternal "github.com/apernet/quic-go/internal/congestion"
-	"github.com/apernet/quic-go/internal/monotime"
-	"github.com/apernet/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/congestion"
+	cgInternal "github.com/ruinstoriel/quic-go/internal/congestion"
+	"github.com/ruinstoriel/quic-go/internal/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
 )
 
 var _ cgInternal.SendAlgorithmWithDebugInfos = &ccAdapter{}

@@ -13,10 +13,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/qtls"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/internal/wire"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/qtls"
+	"github.com/ruinstoriel/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/internal/wire"
 
 	ossfuzzseeds "github.com/quic-go/go-ossfuzz-seeds"
 )
