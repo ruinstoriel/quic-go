@@ -173,7 +173,9 @@ type Conn struct {
 	oneRTTStream        *cryptoStream // only set for the server
 	cryptoStreamHandler cryptoStreamHandler
 	// JLS BEGIN: retain pre-authentication datagrams for camouflage forwarding.
-	jlsForwardCapture *jlsForwardCapture
+	jlsForwardCapture        *jlsForwardCapture
+	requireJLSAuthentication bool
+	jlsAuthFailurePending    bool
 	// JLS END
 	notifyReceivedPacket chan struct{}
 	sendingScheduled     chan struct{}
@@ -410,6 +412,9 @@ var newClientConnection = func(
 		qlogTrace:           qlogTrace,
 		versionNegotiated:   hasNegotiatedVersion,
 		version:             v,
+		// JLS BEGIN: a QUIC client configured for JLS must not accept camouflage TLS.
+		requireJLSAuthentication: tlsConf.JLSConfig != nil && tlsConf.JLSConfig.Enable,
+		// JLS END
 	}
 	if qlogTrace != nil {
 		s.qlogger = qlogTrace.AddProducer()
@@ -572,7 +577,9 @@ func (c *Conn) preSetup() {
 // run the connection main loop
 func (c *Conn) run() (err error) {
 	defer func() { c.ctxCancel(err) }()
-
+	// JLS BEGIN: release authentication fallback capture on every connection exit.
+	defer c.releaseJLSForwardCapture()
+	// JLS END
 	defer func() {
 		// drain queued packets that will never be processed
 		c.receivedPacketMx.Lock()
@@ -698,13 +705,17 @@ runLoop:
 			c.framer.QueueControlFrame(&wire.PingFrame{})
 			c.keepAlivePingSent = true
 		} else if !c.handshakeComplete && now.Sub(c.creationTime) >= c.config.handshakeTimeout() {
-			c.destroyImpl(qerr.ErrHandshakeTimeout)
+			// JLS BEGIN: incomplete camouflage handshakes fall back without local QUIC output.
+			c.destroyImpl(c.handleJLSPreAuthFailure(qerr.ErrIdleTimeout))
+			// JLS END
 			break runLoop
 		} else {
 			idleTimeoutStartTime := c.idleTimeoutStartTime()
 			if (!c.handshakeComplete && now.Sub(idleTimeoutStartTime) >= c.config.HandshakeIdleTimeout) ||
 				(c.handshakeComplete && !now.Before(c.nextIdleTimeoutTime())) {
-				c.destroyImpl(qerr.ErrIdleTimeout)
+				// JLS BEGIN: incomplete camouflage handshakes fall back without local QUIC output.
+				c.destroyImpl(c.handleJLSPreAuthFailure(qerr.ErrHandshakeTimeout))
+				// JLS END
 				break runLoop
 			}
 		}
@@ -1667,7 +1678,7 @@ func (c *Conn) handleUnpackedLongHeaderPacket(
 	packet *unpackedPacket,
 	ecn protocol.ECN,
 	rcvTime monotime.Time,
-	datagramID qlog.DatagramID, // only for logging
+	datagramID qlog.DatagramID,    // only for logging
 	packetSize protocol.ByteCount, // only for logging
 ) error {
 	if !c.receivedFirstPacket {
@@ -1977,8 +1988,8 @@ func (c *Conn) handleFrame(
 func (c *Conn) handlePacket(p receivedPacket) {
 	c.receivedPacketMx.Lock()
 	canQueue := c.receivedPackets.Len() < protocol.MaxConnUnprocessedPackets
-	// JLS BEGIN: forward activated flows, but capture only packets quic-go can queue.
-	if c.handleJLSPacket(p, canQueue) {
+	// JLS BEGIN: forward activated flows and retain complete fallback datagrams.
+	if c.handleJLSPacket(p) {
 		c.receivedPacketMx.Unlock()
 		return
 	}
@@ -2025,7 +2036,10 @@ func (c *Conn) handleConnectionCloseFrame(frame *wire.ConnectionCloseFrame) erro
 	}
 }
 
-func (c *Conn) handleCryptoFrame(frame *wire.CryptoFrame, encLevel protocol.EncryptionLevel, rcvTime monotime.Time) error {
+func (c *Conn) handleCryptoFrame(frame *wire.CryptoFrame, encLevel protocol.EncryptionLevel, rcvTime monotime.Time) (err error) {
+	// JLS BEGIN: commit authentication or mark pre-flight failures for fallback.
+	defer func() { err = c.handleJLSHandshakeResult(err) }()
+	// JLS END
 	if err := c.cryptoStreamManager.HandleCryptoFrame(frame, encLevel); err != nil {
 		return err
 	}
@@ -2034,12 +2048,12 @@ func (c *Conn) handleCryptoFrame(frame *wire.CryptoFrame, encLevel protocol.Encr
 		if data == nil {
 			break
 		}
-		if err := c.cryptoStreamHandler.HandleMessage(data, encLevel); err != nil {
+		// JLS BEGIN: validate JLS state before publishing TLS handshake events.
+		if err := c.handleJLSCryptoData(data, encLevel); err != nil {
+
 			return err
 		}
-		// JLS BEGIN: discard captured datagrams when TLS authenticates JLS.
-		c.finishJLSAuthentication()
-		// JLS END
+
 	}
 	return c.handleHandshakeEvents(rcvTime)
 }
@@ -2052,6 +2066,12 @@ func (c *Conn) handleHandshakeEvents(now monotime.Time) error {
 		case handshake.EventNoEvent:
 			return nil
 		case handshake.EventHandshakeComplete:
+			// JLS BEGIN: reject camouflage TLS without suppressing the client's Finished.
+			if c.requireJLSAuthentication && c.cryptoStreamHandler.ConnectionState().JLS.Status != tls.JLSAuthenticated {
+				c.jlsAuthFailurePending = true
+				break
+			}
+			// JLS END
 			// Don't call handleHandshakeComplete yet.
 			// It's advantageous to process ACK frames that might be serialized after the CRYPTO frame first.
 			c.handshakeComplete = true
@@ -2184,13 +2204,14 @@ func (c *Conn) handleDatagramFrame(f *wire.DatagramFrame) error {
 }
 
 func (c *Conn) setCloseError(e *closeError) {
-	// JLS BEGIN: authentication failures switch to camouflage forwarding without a QUIC close.
-	jlsAuthFailed := errors.Is(e.err, tls.ErrJLSAuthFailed)
-	if jlsAuthFailed {
+	// JLS BEGIN: pre-flight handshake failures switch to camouflage forwarding without a QUIC close.
+	var fallbackErr *jlsFallbackError
+	jlsFallback := errors.Is(e.err, tls.ErrJLSAuthFailed) || errors.As(e.err, &fallbackErr)
+	if jlsFallback {
 		e.immediate = true
 	}
-	if c.closeErr.CompareAndSwap(nil, e) && jlsAuthFailed {
-		c.forwardJLSAuthenticationFailure()
+	if c.closeErr.CompareAndSwap(nil, e) && jlsFallback {
+		c.forwardJLSFallback()
 	}
 	// JLS END
 	c.closeErr.CompareAndSwap(nil, e)
