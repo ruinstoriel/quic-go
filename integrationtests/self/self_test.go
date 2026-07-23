@@ -2,7 +2,7 @@ package self_test
 
 import (
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"crypto/x509"
 	"flag"
 	"fmt"

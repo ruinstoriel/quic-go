@@ -1,8 +1,8 @@
 package protocol
 
 import (
-	"crypto/tls"
 	"fmt"
+	"github.com/metacubex/jls-tls"
 )
 
 // EncryptionLevel is the encryption level

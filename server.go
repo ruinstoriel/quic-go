@@ -2,9 +2,9 @@ package quic
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/metacubex/jls-tls"
 	"net"
 	"sync"
 	"time"
@@ -54,7 +54,9 @@ type baseServer struct {
 	config  *Config
 
 	conn rawConn
-
+	// JLS BEGIN: internal JLS camouflage forwarder.
+	jlsForwarder *jlsForwarder
+	// JLS END
 	tokenGenerator *handshake.TokenGenerator
 	maxTokenAge    time.Duration
 
@@ -279,6 +281,9 @@ func newServer(
 		disableVersionNegotiation: disableVersionNegotiation,
 		onClose:                   onClose,
 	}
+	// JLS BEGIN: initialize forwarding inside the QUIC endpoint instead of wrapping PacketConn.
+	s.jlsForwarder = newJLSForwarder(conn, config.JLSConfig)
+	// JLS END
 	if acceptEarly {
 		s.zeroRTTQueues = map[protocol.ConnectionID]*zeroRTTQueue{}
 	}
@@ -363,6 +368,13 @@ func (s *baseServer) close(e error, transportClose bool) {
 	s.closeErr = e
 	close(s.errorChan)
 	<-s.running
+
+	// JLS BEGIN: close all camouflage forwarding sockets with the server.
+	if s.jlsForwarder != nil {
+		s.jlsForwarder.Close()
+	}
+	// JLS END
+
 	s.closeMx.Unlock()
 
 	if !transportClose {
@@ -689,6 +701,14 @@ func (s *baseServer) handleInitialImpl(p receivedPacket, hdr *wire.Header) error
 				Trigger: qlog.PacketDropUnexpectedPacket,
 			})
 		}
+		// JLS BEGIN: quinn-jls answers invalid Initial DCIDs with an Initial close.
+		if s.config.JLSConfig != nil {
+			sealer, _ := handshake.NewInitialAEAD(hdr.DestConnectionID, protocol.PerspectiveServer, hdr.Version)
+			if err := s.sendError(p.remoteAddr, hdr, sealer, ProtocolViolation, p.info); err != nil {
+				s.logger.Debugf("Error sending PROTOCOL_VIOLATION error: %s", err)
+			}
+		}
+		// JLS END
 		p.buffer.Release()
 		return errors.New("too short connection ID")
 	}
@@ -835,6 +855,11 @@ func (s *baseServer) handleInitialImpl(p receivedPacket, hdr *wire.Header) error
 		s.logger,
 		hdr.Version,
 	)
+	// JLS BEGIN: let quic-go and TLS decide authentication before forwarding.
+	if conn.Conn != nil {
+		conn.enableJLSForwarding(s.jlsForwarder)
+	}
+	// JLS END
 	conn.handlePacket(p)
 	// Adding the connection will fail if the client's chosen Destination Connection ID is already in use.
 	// This is very unlikely: Even if an attacker chooses a connection ID that's already in use,

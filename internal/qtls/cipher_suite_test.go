@@ -2,7 +2,7 @@ package qtls
 
 import (
 	"crypto/fips140"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"net"
 	"testing"

@@ -5,13 +5,13 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/fips140"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
-// These cipher suite implementations are copied from the standard library crypto/tls package.
+// These cipher suite implementations are copied from the standard library github.com/metacubex/jls-tls package.
 
 const aeadNonceLength = 12
 

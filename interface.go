@@ -2,8 +2,8 @@ package quic
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
+	"github.com/metacubex/jls-tls"
 	"net"
 	"slices"
 	"time"
@@ -100,6 +100,10 @@ type Config struct {
 	// The QUIC versions that can be negotiated.
 	// If not set, it uses all versions available.
 	Versions []Version
+
+	// JLS BEGIN: ShadowQUIC JLS camouflage configuration.
+	JLSConfig *JLSConfig
+	// JLS END
 	// HandshakeIdleTimeout is the idle timeout before completion of the handshake.
 	// If we don't receive any packet from the peer within this time, the connection attempt is aborted.
 	// Additionally, if the handshake doesn't complete in twice this time, the connection attempt is also aborted.
@@ -225,3 +229,17 @@ type ConnectionState struct {
 	// GSO says if generic segmentation offload is used.
 	GSO bool
 }
+
+// JLS BEGIN: caller-controlled camouflage packet dialing.
+// JLSPacketDialer creates a fresh packet connection for JLS camouflage
+// forwarding and returns the resolved upstream address used with WriteTo.
+type JLSPacketDialer func(ctx context.Context, network, address string) (net.PacketConn, net.Addr, error)
+
+// JLSConfig configures ShadowQUIC JLS camouflage behavior in the QUIC layer.
+type JLSConfig struct {
+	UpstreamAddr string
+	RateLimit    uint64
+	PacketDialer JLSPacketDialer
+}
+
+// JLS END

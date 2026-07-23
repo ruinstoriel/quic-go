@@ -1,7 +1,7 @@
 package http09
 
 import (
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"io"
 	"net"

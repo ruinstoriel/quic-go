@@ -2,7 +2,7 @@ package quic
 
 import (
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"net"
 	"runtime"
 	"testing"

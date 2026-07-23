@@ -2,7 +2,7 @@ package http09
 
 import (
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"errors"
 	"io"
 	"log"

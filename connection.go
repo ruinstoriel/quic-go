@@ -3,9 +3,9 @@ package quic
 import (
 	"bytes"
 	"context"
-	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/metacubex/jls-tls"
 	"io"
 	"net"
 	"reflect"
@@ -172,7 +172,9 @@ type Conn struct {
 	handshakeStream     *cryptoStream
 	oneRTTStream        *cryptoStream // only set for the server
 	cryptoStreamHandler cryptoStreamHandler
-
+	// JLS BEGIN: retain pre-authentication datagrams for camouflage forwarding.
+	jlsForwardCapture *jlsForwardCapture
+	// JLS END
 	notifyReceivedPacket chan struct{}
 	sendingScheduled     chan struct{}
 	receivedPacketMx     sync.Mutex
@@ -1974,9 +1976,16 @@ func (c *Conn) handleFrame(
 // handlePacket is called by the server with a new packet
 func (c *Conn) handlePacket(p receivedPacket) {
 	c.receivedPacketMx.Lock()
+	canQueue := c.receivedPackets.Len() < protocol.MaxConnUnprocessedPackets
+	// JLS BEGIN: forward activated flows, but capture only packets quic-go can queue.
+	if c.handleJLSPacket(p, canQueue) {
+		c.receivedPacketMx.Unlock()
+		return
+	}
+	// JLS END
 	// Discard packets once the amount of queued packets is larger than
 	// the channel size, protocol.MaxConnUnprocessedPackets
-	if c.receivedPackets.Len() >= protocol.MaxConnUnprocessedPackets {
+	if !canQueue {
 		if c.qlogger != nil {
 			var datagramID qlog.DatagramID
 			if wire.IsLongHeaderPacket(p.data[0]) {
@@ -2028,6 +2037,9 @@ func (c *Conn) handleCryptoFrame(frame *wire.CryptoFrame, encLevel protocol.Encr
 		if err := c.cryptoStreamHandler.HandleMessage(data, encLevel); err != nil {
 			return err
 		}
+		// JLS BEGIN: discard captured datagrams when TLS authenticates JLS.
+		c.finishJLSAuthentication()
+		// JLS END
 	}
 	return c.handleHandshakeEvents(rcvTime)
 }
@@ -2172,6 +2184,15 @@ func (c *Conn) handleDatagramFrame(f *wire.DatagramFrame) error {
 }
 
 func (c *Conn) setCloseError(e *closeError) {
+	// JLS BEGIN: authentication failures switch to camouflage forwarding without a QUIC close.
+	jlsAuthFailed := errors.Is(e.err, tls.ErrJLSAuthFailed)
+	if jlsAuthFailed {
+		e.immediate = true
+	}
+	if c.closeErr.CompareAndSwap(nil, e) && jlsAuthFailed {
+		c.forwardJLSAuthenticationFailure()
+	}
+	// JLS END
 	c.closeErr.CompareAndSwap(nil, e)
 	select {
 	case c.closeChan <- struct{}{}:

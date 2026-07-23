@@ -3,7 +3,7 @@ package http3
 import (
 	"bytes"
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"io"
 	"log/slog"

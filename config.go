@@ -106,8 +106,11 @@ func populateConfig(config *Config) *Config {
 	}
 
 	return &Config{
-		GetConfigForClient:               config.GetConfigForClient,
-		Versions:                         versions,
+		GetConfigForClient: config.GetConfigForClient,
+		Versions:           versions,
+		// JLS BEGIN: preserve the ShadowQUIC JLS camouflage configuration.
+		JLSConfig: config.JLSConfig,
+		// JLS END
 		HandshakeIdleTimeout:             handshakeIdleTimeout,
 		MaxIdleTimeout:                   idleTimeout,
 		KeepAlivePeriod:                  config.KeepAlivePeriod,

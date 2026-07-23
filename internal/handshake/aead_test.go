@@ -2,7 +2,7 @@ package handshake
 
 import (
 	"crypto/rand"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"testing"
 

@@ -3,7 +3,7 @@ package self_test
 import (
 	"context"
 	"crypto/fips140"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"errors"
 	"fmt"
 	"io"
