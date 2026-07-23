@@ -1,7 +1,7 @@
 package handshake
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"net"
 )
 
@@ -14,7 +14,7 @@ func setupConfigForServer(conf *tls.Config, localAddr, remoteAddr net.Addr) *tls
 	conf.MinVersion = tls.VersionTLS13
 
 	// The tls.Config contains two callbacks that pass in a tls.ClientHelloInfo.
-	// Since github.com/metacubex/jls-tls doesn't do it, we need to make sure to set the Conn field with a fake net.Conn
+	// Since crypto/tls doesn't do it, we need to make sure to set the Conn field with a fake net.Conn
 	// that allows the caller to get the local and the remote address.
 	if conf.GetConfigForClient != nil {
 		gcfc := conf.GetConfigForClient

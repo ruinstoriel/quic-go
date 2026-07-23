@@ -9,7 +9,7 @@ import (
 	"crypto/fips140"
 	"crypto/rand"
 	"crypto/sha256"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"crypto/x509"
 	"encoding/hex"
 	"encoding/json"

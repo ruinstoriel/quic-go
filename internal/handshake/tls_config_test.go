@@ -1,7 +1,7 @@
 package handshake
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"net"
 	"reflect"
 	"testing"

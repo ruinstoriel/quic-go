@@ -3,7 +3,6 @@ module github.com/ruinstoriel/quic-go
 go 1.25.0
 
 require (
-	github.com/metacubex/jls-tls v0.0.0-20260723084315-67adc0e2f796
 	github.com/quic-go/go-ossfuzz-seeds v0.1.0
 	github.com/quic-go/qpack v0.6.0
 	github.com/stretchr/testify v1.11.1
@@ -18,10 +17,6 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/jordanlewis/gcassert v0.0.0-20250430164644-389ef753e22e // indirect
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/metacubex/cpu v0.1.0 // indirect
-	github.com/metacubex/hkdf v0.1.0 // indirect
-	github.com/metacubex/hpke v0.1.0 // indirect
-	github.com/metacubex/mlkem v0.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	golang.org/x/mod v0.35.0 // indirect

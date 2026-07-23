@@ -2,7 +2,7 @@ package self_test
 
 import (
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"fmt"
 	"net"
 	"net/http"

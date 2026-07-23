@@ -1,7 +1,7 @@
 package tools
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"crypto/x509"
 	"io"
 	"net"

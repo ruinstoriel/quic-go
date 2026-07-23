@@ -3,7 +3,7 @@ package quic
 import (
 	"context"
 	"crypto/rand"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"errors"
 	"net"
 	"slices"

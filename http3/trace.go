@@ -1,7 +1,7 @@
 package http3
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"net"
 	"net/http/httptrace"
 	"net/textproto"

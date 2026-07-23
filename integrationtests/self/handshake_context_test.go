@@ -2,7 +2,7 @@ package self_test
 
 import (
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"errors"
 	"net"
 	"testing"
@@ -128,7 +128,7 @@ func TestConnContextOnServerSide(t *testing.T) {
 	checkContext(connContextChan, true)
 	checkContext(tracerContextChan, true)
 	checkContext(streamContextChan, true)
-	// github.com/metacubex/jls-tls cancels the context when the TLS handshake completes.
+	// crypto/tls cancels the context when the TLS handshake completes.
 	checkContext(tlsGetConfigForClientContextChan, false)
 	checkContext(tlsGetCertificateContextChan, false)
 }
@@ -283,7 +283,7 @@ func TestContextOnClientSide(t *testing.T) {
 
 	checkContext(conn.Context(), true)
 	checkContext(str.Context(), true)
-	// github.com/metacubex/jls-tls cancels the context when the TLS handshake completes
+	// crypto/tls cancels the context when the TLS handshake completes
 	checkContextFromChan(tlsContextChan, false)
 	checkContextFromChan(tracerContextChan, false)
 }

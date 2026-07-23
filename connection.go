@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"io"
 	"net"
 	"reflect"

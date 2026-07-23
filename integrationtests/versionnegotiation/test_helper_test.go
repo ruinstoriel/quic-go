@@ -2,7 +2,7 @@ package versionnegotiation
 
 import (
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"crypto/x509"
 	"flag"
 	"os"

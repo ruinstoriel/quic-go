@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"io"

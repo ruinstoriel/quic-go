@@ -3,7 +3,7 @@ package self_test
 import (
 	"bytes"
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net"
@@ -798,7 +798,7 @@ func Test0RTTRejectedOnALPNChanged(t *testing.T) {
 		// switch to different ALPN on the server side
 		tlsConf.NextProtos = []string{"new-alpn"}
 		// Append to the client's ALPN.
-		// github.com/metacubex/jls-tls will attempt to resume with the ALPN from the original connection
+		// crypto/tls will attempt to resume with the ALPN from the original connection
 		clientTLSConf.NextProtos = append(clientTLSConf.NextProtos, "new-alpn")
 		counter, tracer := newPacketTracer()
 		ln, err = tr.ListenEarly(

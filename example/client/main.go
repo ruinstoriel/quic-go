@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"crypto/x509"
 	"flag"
 	"io"

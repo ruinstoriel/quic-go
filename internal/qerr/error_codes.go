@@ -1,7 +1,7 @@
 package qerr
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"fmt"
 )
 

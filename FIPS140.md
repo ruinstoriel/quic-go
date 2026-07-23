@@ -6,15 +6,15 @@ Starting with quic-go v0.60, the behavior described here applies when built with
 
 ## QUIC operations relevant to FIPS 140-3
 
-quic-go delegates the TLS 1.3 handshake, certificate handling, cipher suite selection, session tickets, and the TLS key schedule to `github.com/metacubex/jls-tls`. When Go's FIPS 140-3 mode is active, `github.com/metacubex/jls-tls` restricts the algorithms it negotiates.
+quic-go delegates the TLS 1.3 handshake, certificate handling, cipher suite selection, session tickets, and the TLS key schedule to `crypto/tls`. When Go's FIPS 140-3 mode is active, `crypto/tls` restricts the algorithms it negotiates.
 
 ### Packet protection AEADs
 
 The main quic-go-specific FIPS-relevant operations are the AEADs protecting Handshake, 0-RTT, and 1-RTT packets.
 
-AES-GCM packet protection AEADs are constructed through the Go standard library's TLS 1.3 AES-GCM implementation. Today this uses `go:linkname` to call the unexported `github.com/metacubex/jls-tls.aeadAESGCMTLS13`, because the standard library does not yet expose a QUIC-specific constructor; see [golang/go#79219](https://github.com/golang/go/issues/79219).
+AES-GCM packet protection AEADs are constructed through the Go standard library's TLS 1.3 AES-GCM implementation. Today this uses `go:linkname` to call the unexported `crypto/tls.aeadAESGCMTLS13`, because the standard library does not yet expose a QUIC-specific constructor; see [golang/go#79219](https://github.com/golang/go/issues/79219).
 
-ChaCha20-Poly1305 is not used in Go's FIPS 140-3 mode. `github.com/metacubex/jls-tls` avoids that cipher suite during negotiation, and quic-go additionally guards its internal ChaCha20-Poly1305 path when FIPS 140-3 mode is enabled.
+ChaCha20-Poly1305 is not used in Go's FIPS 140-3 mode. `crypto/tls` avoids that cipher suite during negotiation, and quic-go additionally guards its internal ChaCha20-Poly1305 path when FIPS 140-3 mode is enabled.
 
 ### Header protection
 
@@ -22,7 +22,7 @@ For Handshake, 0-RTT, and 1-RTT packets protected with AES cipher suites, header
 
 ### Address validation tokens
 
-quic-go encrypts the address validation tokens it sends in Retry packets and NEW_TOKEN frames. These are not TLS session tickets (those are handled by `github.com/metacubex/jls-tls`); they carry server-defined state such as the client address, timestamp, RTT information, and Retry connection IDs.
+quic-go encrypts the address validation tokens it sends in Retry packets and NEW_TOKEN frames. These are not TLS session tickets (those are handled by `crypto/tls`); they carry server-defined state such as the client address, timestamp, RTT information, and Retry connection IDs.
 
 Token-protection keys are derived with `crypto/hkdf`, AES is used via `crypto/aes`, and the token AEAD is constructed with `cipher.NewGCMWithRandomNonce`, keeping token encryption on standard library primitives.
 

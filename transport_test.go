@@ -3,7 +3,7 @@ package quic
 import (
 	"bytes"
 	"context"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"errors"
 	"math"
 	"net"

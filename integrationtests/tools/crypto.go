@@ -4,7 +4,7 @@ import (
 	"crypto"
 	"crypto/ed25519"
 	"crypto/rand"
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"math/big"

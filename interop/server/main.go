@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/metacubex/jls-tls"
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net"
