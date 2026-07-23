@@ -77,11 +77,11 @@ type baseServer struct {
 		context.CancelCauseFunc,
 		sendConn,
 		connRunner,
-		protocol.ConnectionID, /* original dest connection ID */
+		protocol.ConnectionID,  /* original dest connection ID */
 		*protocol.ConnectionID, /* retry src connection ID */
-		protocol.ConnectionID, /* client dest connection ID */
-		protocol.ConnectionID, /* destination connection ID */
-		protocol.ConnectionID, /* source connection ID */
+		protocol.ConnectionID,  /* client dest connection ID */
+		protocol.ConnectionID,  /* destination connection ID */
+		protocol.ConnectionID,  /* source connection ID */
 		ConnectionIDGenerator,
 		*statelessResetter,
 		*Config,
@@ -475,6 +475,12 @@ func (s *baseServer) handlePacketImpl(p receivedPacket) bool /* is the buffer st
 			}
 			return false
 		}
+		if s.jlsForwarder != nil {
+			// The camouflage profile advertised this version, but this QUIC stack
+			// can't decode it. Let the real upstream produce the observable result.
+			s.jlsForwarder.handleCamouflageVersionPacket(p)
+			return false
+		}
 		return s.enqueueVersionNegotiationPacket(p)
 	}
 
@@ -701,14 +707,7 @@ func (s *baseServer) handleInitialImpl(p receivedPacket, hdr *wire.Header) error
 				Trigger: qlog.PacketDropUnexpectedPacket,
 			})
 		}
-		// JLS BEGIN: quinn-jls answers invalid Initial DCIDs with an Initial close.
-		if s.config.JLSConfig != nil {
-			sealer, _ := handshake.NewInitialAEAD(hdr.DestConnectionID, protocol.PerspectiveServer, hdr.Version)
-			if err := s.sendError(p.remoteAddr, hdr, sealer, ProtocolViolation, p.info); err != nil {
-				s.logger.Debugf("Error sending PROTOCOL_VIOLATION error: %s", err)
-			}
-		}
-		// JLS END
+
 		p.buffer.Release()
 		return errors.New("too short connection ID")
 	}
