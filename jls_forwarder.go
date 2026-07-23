@@ -5,7 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/rand"
 	"crypto/sha256"
-	tls "crypto/tls"
+	tls "github.com/metacubex/jls-tls"
 	"github.com/ruinstoriel/quic-go/internal/protocol"
 	"github.com/ruinstoriel/quic-go/internal/utils"
 	"net"

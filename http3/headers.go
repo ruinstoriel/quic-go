@@ -4,15 +4,15 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/metacubex/http"
 	"io"
-	"net/http"
 	"net/textproto"
 	"net/url"
 	"slices"
 	"strconv"
 	"strings"
 
-	"golang.org/x/net/http/httpguts"
+	"golang.org/x/github.com/metacubex/http/httpguts"
 
 	"github.com/quic-go/qpack"
 	"github.com/ruinstoriel/quic-go"

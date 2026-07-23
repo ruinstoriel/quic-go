@@ -2,11 +2,11 @@ package self_test
 
 import (
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"net"
-	"net/http"
-	"net/http/httptrace"
+	"github.com/metacubex/http"
+	"github.com/metacubex/http/httptrace"
 	"net/textproto"
 	"testing"
 	"time"

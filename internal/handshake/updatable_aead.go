@@ -3,7 +3,7 @@ package handshake
 import (
 	"crypto"
 	"crypto/cipher"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"encoding/binary"
 	"fmt"
 	"sync/atomic"

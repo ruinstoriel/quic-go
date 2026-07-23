@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"net/http"
+	"github.com/metacubex/http"
 	"sync"
 	"testing"
 	"testing/synctest"

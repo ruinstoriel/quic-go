@@ -1,11 +1,11 @@
 package main
 
 import (
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"log"
 	"net"
-	"net/http"
+	"github.com/metacubex/http"
 	"os"
 
 	"github.com/ruinstoriel/quic-go"

@@ -2,7 +2,7 @@ package handshake
 
 import (
 	"crypto/fips140"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"encoding/hex"
 	"strings"
 	"testing"

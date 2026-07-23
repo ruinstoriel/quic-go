@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 	"log"
-	"net/http"
+	"github.com/metacubex/http"
 	"net/url"
 	"runtime"
 	"strings"
@@ -101,7 +101,7 @@ func (s *Server) handleStream(str *quic.Stream) error {
 	func() {
 		defer func() {
 			if p := recover(); p != nil {
-				// Copied from net/http/server.go
+				// Copied from github.com/metacubex/http/server.go
 				const size = 64 << 10
 				buf := make([]byte, size)
 				buf = buf[:runtime.Stack(buf, false)]

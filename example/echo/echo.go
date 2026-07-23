@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/ed25519"
 	"crypto/rand"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"crypto/x509"
 	"fmt"
 	"io"

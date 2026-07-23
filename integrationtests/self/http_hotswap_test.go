@@ -3,7 +3,7 @@ package self_test
 import (
 	"io"
 	"net"
-	"net/http"
+	"github.com/metacubex/http"
 	"strconv"
 	"testing"
 	"time"

@@ -1,7 +1,7 @@
 package testdata
 
 import (
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"crypto/x509"
 	"os"
 	"path"

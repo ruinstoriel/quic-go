@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/metacubex/http"
 	"io"
 	"log/slog"
-	"net/http"
-	"net/http/httptrace"
+	"github.com/metacubex/http/httptrace"
 	"net/textproto"
 	"sync"
 	"time"
@@ -449,7 +449,7 @@ func (c *ClientConn) doRequest(req *http.Request, str *RequestStream) (*http.Res
 		}
 	}
 
-	// copy from net/http: support 1xx responses
+	// copy from github.com/metacubex/http: support 1xx responses
 	var num1xx int // number of informational 1xx headers received
 	var res *http.Response
 	for {

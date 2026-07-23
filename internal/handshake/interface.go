@@ -3,7 +3,7 @@ package handshake
 import (
 	"context"
 	"errors"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"io"
 
 	"github.com/ruinstoriel/quic-go/internal/monotime"

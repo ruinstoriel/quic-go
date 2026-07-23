@@ -2,20 +2,20 @@ package http3
 
 import (
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"errors"
 	"fmt"
 	"io"
 	"log/slog"
 	"net"
-	"net/http"
-	"net/http/httptrace"
+	"github.com/metacubex/http"
+	"github.com/metacubex/http/httptrace"
 	"net/url"
 	"strings"
 	"sync"
 	"sync/atomic"
 
-	"golang.org/x/net/http/httpguts"
+	"golang.org/x/github.com/metacubex/http/httpguts"
 
 	"github.com/ruinstoriel/quic-go"
 )
@@ -517,7 +517,7 @@ func validMethod(method string) bool {
 	return len(method) > 0 && strings.IndexFunc(method, isNotToken) == -1
 }
 
-// copied from net/http/http.go
+// copied from github.com/metacubex/http/http.go
 func isNotToken(r rune) bool {
 	return !httpguts.IsTokenRune(r)
 }

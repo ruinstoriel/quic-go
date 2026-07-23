@@ -5,7 +5,7 @@ import (
 	_ "unsafe" // for go:linkname
 )
 
-// Reaching into crypto/tls is a bit of a hack, but it's the only way to get the FIPS 140
+// Reaching into github.com/metacubex/jls-tls is a bit of a hack, but it's the only way to get the FIPS 140
 // compliant AEAD, because the standard library doesn't yet expose the NewGCMForQUIC constructor
 // added in https://go-review.googlesource.com/c/go/+/723760.
 // See https://github.com/golang/go/issues/79219 for details.
@@ -13,7 +13,7 @@ import (
 // Once the standard library exposes the necessary constructors, we can use a shared code path
 // for both FIPS 140 and non-FIPS 140 modes.
 //
-//go:linkname cryptoTLSAEAD_AESGCMTLS13 crypto/tls.aeadAESGCMTLS13
+//go:linkname cryptoTLSAEAD_AESGCMTLS13 github.com/metacubex/jls-tls.aeadAESGCMTLS13
 func cryptoTLSAEAD_AESGCMTLS13(key, nonceMask []byte) cipher.AEAD
 
 func aeadAESGCMTLS13FIPS140(key, nonceMask []byte) cipher.AEAD {

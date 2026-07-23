@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/metacubex/http"
+	"github.com/metacubex/http/httptrace"
 	"io"
 	"net"
-	"net/http"
-	"net/http/httptrace"
 	"strconv"
 	"strings"
 	"sync"
@@ -295,7 +295,7 @@ func actualContentLength(req *http.Request) int64 {
 }
 
 // shouldSendReqContentLength reports whether the http2.Transport should send
-// a "content-length" request header. This logic is basically a copy of the net/http
+// a "content-length" request header. This logic is basically a copy of the github.com/metacubex/http
 // transferWriter.shouldSendContentLength.
 // The contentLength is the corrected contentLength (so 0 means actually 0, not unknown).
 // -1 means unknown.

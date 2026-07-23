@@ -3,9 +3,9 @@ package http3
 import (
 	"context"
 	"errors"
+	"github.com/metacubex/http"
 	"io"
 	"log/slog"
-	"net/http"
 	"runtime"
 	"strconv"
 	"time"
@@ -208,7 +208,7 @@ func (c *RawServerConn) handleRequestStream(str *stateTrackingStream) {
 				if p == http.ErrAbortHandler {
 					return
 				}
-				// Copied from net/http/server.go
+				// Copied from github.com/metacubex/http/server.go
 				const size = 64 << 10
 				buf := make([]byte, size)
 				buf = buf[:runtime.Stack(buf, false)]

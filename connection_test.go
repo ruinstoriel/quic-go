@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/rand"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"errors"
 	"fmt"
 	"net"
@@ -3152,7 +3152,7 @@ func testConnectionConnectionIDChanges(t *testing.T, sendRetry bool) {
 // When the connection is closed before sending the first packet,
 // we don't send a CONNECTION_CLOSE.
 // This can happen if there's something wrong the tls.Config, and
-// crypto/tls refuses to start the handshake.
+// github.com/metacubex/jls-tls refuses to start the handshake.
 func TestConnectionEarlyClose(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)

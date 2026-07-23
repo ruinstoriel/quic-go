@@ -14,8 +14,8 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-$upstream = "crypto/tls"
-$fork     = "github.com/metacubex/jls-tls"
+$upstream = "net/http"
+$fork     = "github.com/metacubex/http"
 
 $from = $upstream
 $to   = $fork
@@ -26,7 +26,7 @@ if ($Reverse) {
 }
 
 # 1. 根目录的 go.mod 依然使用标准工具更新
-go mod edit -module="$to"
+# go mod edit -module="$to"
 
 # 2. 获取目标文件，自动跳过隐藏文件夹（如 .git, .github 等）以及脚本自身
 $targetExtensions = @('.go', '.md', '.sh', '.mod')

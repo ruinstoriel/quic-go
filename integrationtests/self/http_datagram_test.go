@@ -6,7 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"net/http"
+	"github.com/metacubex/http"
 	"net/url"
 	"testing"
 	"time"

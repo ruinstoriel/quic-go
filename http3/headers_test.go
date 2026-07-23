@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"io"
 	"math"
-	"net/http"
+	"github.com/metacubex/http"
 	"testing"
 
 	ossfuzzseeds "github.com/quic-go/go-ossfuzz-seeds"
 	"github.com/quic-go/qpack"
 
 	"github.com/stretchr/testify/require"
-	"golang.org/x/net/http/httpguts"
+	"golang.org/x/github.com/metacubex/http/httpguts"
 )
 
 func decodeFromSlice(headers []qpack.HeaderField) qpack.DecodeFunc {

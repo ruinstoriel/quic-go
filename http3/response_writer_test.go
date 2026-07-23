@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
-	"net/http"
+	"github.com/metacubex/http"
 	"testing"
 
 	"github.com/ruinstoriel/quic-go"

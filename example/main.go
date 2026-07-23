@@ -8,12 +8,12 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
-	"net/http"
+	"github.com/metacubex/http"
 	"strconv"
 	"strings"
 	"sync"
 
-	_ "net/http/pprof"
+	_ "github.com/metacubex/http/pprof"
 
 	"github.com/ruinstoriel/quic-go"
 	"github.com/ruinstoriel/quic-go/http3"

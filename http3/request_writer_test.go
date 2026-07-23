@@ -3,8 +3,8 @@ package http3
 import (
 	"bytes"
 	"io"
-	"net/http"
-	"net/http/httptest"
+	"github.com/metacubex/http"
+	"github.com/metacubex/http/httptest"
 	"testing"
 
 	"github.com/ruinstoriel/quic-go"

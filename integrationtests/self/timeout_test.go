@@ -3,7 +3,7 @@ package self_test
 import (
 	"bytes"
 	"context"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"errors"
 	"fmt"
 	"io"

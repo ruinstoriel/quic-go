@@ -5,7 +5,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"fmt"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"math/big"
 	"net"
 	"sync"
@@ -124,7 +124,7 @@ type Transport struct {
 	// The context is closed when the connection is closed, or when the handshake fails for any reason.
 	// The context returned from the callback is used to derive every other context used during the
 	// lifetime of the connection:
-	// * the context passed to crypto/tls (and used on the tls.ClientHelloInfo)
+	// * the context passed to github.com/metacubex/jls-tls (and used on the tls.ClientHelloInfo)
 	// * the context used in Config.QlogTrace
 	// * the context returned from Conn.Context
 	// * the context returned from SendStream.Context

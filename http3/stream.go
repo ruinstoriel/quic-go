@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/metacubex/http"
 	"io"
-	"net/http"
-	"net/http/httptrace"
+	"github.com/metacubex/http/httptrace"
 	"time"
 
 	"github.com/ruinstoriel/quic-go"

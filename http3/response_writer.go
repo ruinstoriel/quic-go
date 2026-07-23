@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"log/slog"
-	"net/http"
+	"github.com/metacubex/http"
 	"net/textproto"
 	"strconv"
 	"strings"
@@ -13,7 +13,7 @@ import (
 	"github.com/quic-go/qpack"
 	"github.com/ruinstoriel/quic-go/http3/qlog"
 
-	"golang.org/x/net/http/httpguts"
+	"golang.org/x/github.com/metacubex/http/httpguts"
 )
 
 // The HTTPStreamer allows taking over a HTTP/3 stream. The interface is implemented by the http.ResponseWriter.

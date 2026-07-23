@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"net"
 	"strings"
 	"sync/atomic"
@@ -300,7 +300,7 @@ func (h *cryptoSetup) handleEvent(ev tls.QUICEvent) (err error) {
 		return extractQUICEventError(ev)
 	default:
 		// Unknown events should be ignored.
-		// crypto/tls will ensure that this is safe to do.
+		// github.com/metacubex/jls-tls will ensure that this is safe to do.
 		// See the discussion following https://github.com/golang/go/issues/68124#issuecomment-2187042510 for details.
 		return nil
 	}
@@ -378,7 +378,7 @@ func (h *cryptoSetup) getDataForSessionTicket() []byte {
 }
 
 // GetSessionTicket generates a new session ticket.
-// Due to limitations in crypto/tls, it's only possible to generate a single session ticket per connection.
+// Due to limitations in github.com/metacubex/jls-tls, it's only possible to generate a single session ticket per connection.
 // It is only valid for the server.
 func (h *cryptoSetup) GetSessionTicket() ([]byte, error) {
 	if err := h.conn.SendSessionTicket(tls.QUICSessionTicketOptions{

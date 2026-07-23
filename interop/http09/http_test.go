@@ -1,12 +1,12 @@
 package http09
 
 import (
-	"crypto/tls"
+	"github.com/metacubex/jls-tls"
 	"fmt"
 	"io"
 	"net"
-	"net/http"
-	"net/http/httptest"
+	"github.com/metacubex/http"
+	"github.com/metacubex/http/httptest"
 	"testing"
 
 	"github.com/ruinstoriel/quic-go"
