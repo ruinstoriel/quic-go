@@ -478,7 +478,7 @@ func (c *ClientConn) doRequest(req *http.Request, str *RequestStream) (*http.Res
 		break
 	}
 	connState := c.conn.ConnectionState().TLS
-	res.TLS = &connState
+	res.TLS = httpTLSConnectionStatePtr(connState)
 	res.Request = req
 	return res, nil
 }

@@ -165,7 +165,7 @@ func (c *RawServerConn) handleRequestStream(str *stateTrackingStream) {
 	}
 
 	connState := conn.ConnectionState().TLS
-	req.TLS = &connState
+	req.TLS = httpTLSConnectionStatePtr(connState)
 	req.RemoteAddr = conn.RemoteAddr().String()
 
 	// Check that the client doesn't send more data in DATA frames than indicated by the Content-Length header (if set).
