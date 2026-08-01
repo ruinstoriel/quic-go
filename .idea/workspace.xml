@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17aaf85f-2641-439c-8156-06bfe5f88555" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/rename.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FUZZING.md" beforeDir="false" afterPath="$PROJECT_DIR$/FUZZING.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SECURITY.md" beforeDir="false" afterPath="$PROJECT_DIR$/SECURITY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buffer_pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/buffer_pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buffer_pool_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/buffer_pool_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chrome_parrot.go" beforeDir="false" afterPath="$PROJECT_DIR$/chrome_parrot.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/closed_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/closed_conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/closed_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/closed_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/config_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/congestion/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/congestion/interface.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conn_id_generator.go" beforeDir="false" afterPath="$PROJECT_DIR$/conn_id_generator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conn_id_generator_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/conn_id_generator_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conn_id_manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/conn_id_manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conn_id_manager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/conn_id_manager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/connection.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection_logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/connection_logging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection_logging_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connection_logging_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connection_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_stream_manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_stream_manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_stream_manager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_stream_manager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datagram_queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/datagram_queue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datagram_queue_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/datagram_queue_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/client/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/client/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/echo/echo.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/echo/echo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_base.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_base.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_connection.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_connection_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_connection_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flow_controller_test_helpers_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/flow_controller_test_helpers_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame_sorter.go" beforeDir="false" afterPath="$PROJECT_DIR$/frame_sorter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame_sorter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/frame_sorter_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framer.go" beforeDir="false" afterPath="$PROJECT_DIR$/framer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/framer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/http3/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/body.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/body.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/body_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/body_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/capsule.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/capsule.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/capsule_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/capsule_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/error_codes.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/error_codes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/error_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/error_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/frames.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/frames.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/frames_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/frames_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/headers.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/headers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/headers_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/headers_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/http3_helper_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/http3_helper_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/mock_clientconn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/mock_clientconn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/mock_datagram_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/mock_datagram_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/mock_quic_listener_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/mock_quic_listener_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/mockgen.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/mockgen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/event_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/event_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/qlog_dir.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/qlog_dir.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/qlog/qlog_dir_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/qlog/qlog_dir_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/request_writer.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/request_writer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/request_writer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/request_writer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/response_writer.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/response_writer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/response_writer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/response_writer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/server_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/server_conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/server_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/server_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/state_tracking_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/state_tracking_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/state_tracking_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/state_tracking_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/trace.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/trace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http3/transport_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http3/transport_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/fips/fips_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/fips/fips_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/fips/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/fips/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/gomodvendor/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/gomodvendor/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/gomodvendor/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/gomodvendor/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/benchmark_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/benchmark_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/cancelation_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/cancelation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/chrome_parrot_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/chrome_parrot_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/close_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/close_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/conn_id_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/conn_id_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/connection_migration_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/connection_migration_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/datagram_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/datagram_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/deadline_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/deadline_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/drop_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/drop_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/early_data_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/early_data_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/handshake_context_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/handshake_context_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/handshake_drop_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/handshake_drop_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/handshake_rtt_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/handshake_rtt_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/handshake_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/handshake_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_datagram_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_datagram_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_hotswap_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_hotswap_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_qlog_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_qlog_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_raw_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_raw_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_shutdown_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_shutdown_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/http_trace_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/http_trace_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/key_update_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/key_update_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/mitm_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/mitm_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/mtu_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/mtu_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/multiplex_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/multiplex_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/nat_rebinding_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/nat_rebinding_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/packetization_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/packetization_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/qlog_dir_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/qlog_dir_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/qlog_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/qlog_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/resumption_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/resumption_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/rtt_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/rtt_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/self_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/self_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/simnet_helper_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/simnet_helper_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/stateless_reset_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/stateless_reset_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/timeout_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/timeout_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/self/zero_rtt_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/self/zero_rtt_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/tools/proxy/proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/tools/proxy/proxy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/tools/proxy/proxy_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/tools/proxy/proxy_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/tools/qlog.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/tools/qlog.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/versionnegotiation/handshake_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/versionnegotiation/handshake_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/versionnegotiation/rtt_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/versionnegotiation/rtt_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrationtests/versionnegotiation/test_helper_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/integrationtests/versionnegotiation/test_helper_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/interface.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/ack_eliciting.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/ack_eliciting.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/ack_eliciting_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/ack_eliciting_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/cc_adapter.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/cc_adapter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/cc_adapter_ex.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/cc_adapter_ex.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/ecn.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/ecn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/ecn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/ecn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/interfaces.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/interfaces.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/lost_packet_tracker.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/lost_packet_tracker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/lost_packet_tracker_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/lost_packet_tracker_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/mock_ecn_handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/mock_ecn_handler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/mockgen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/mockgen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/packet.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/packet.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/packet_number_generator.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/packet_number_generator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/packet_number_generator_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/packet_number_generator_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_handler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_history.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_history.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_history_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_history_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_tracker.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_tracker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/received_packet_tracker_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/received_packet_tracker_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/sent_packet_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/sent_packet_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/sent_packet_handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/sent_packet_handler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/sent_packet_history.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/sent_packet_history.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ackhandler/sent_packet_history_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ackhandler/sent_packet_history_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/bandwidth.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/bandwidth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/clock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/clock.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/cubic.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/cubic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/cubic_sender.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/cubic_sender.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/cubic_sender_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/cubic_sender_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/cubic_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/cubic_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/hybrid_slow_start.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/hybrid_slow_start.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/hybrid_slow_start_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/hybrid_slow_start_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/interface.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/pacer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/pacer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/congestion/pacer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/congestion/pacer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/aead.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/aead.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/aead_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/aead_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/chrome_client_hello.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/chrome_client_hello.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/crypto_setup.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/crypto_setup.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/crypto_setup_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/crypto_setup_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/handshake_fuzz_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/handshake_fuzz_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/header_protector.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/header_protector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/initial_aead.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/initial_aead.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/initial_aead_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/initial_aead_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/interface.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/retry_go125.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/retry_go125.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/retry_go126.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/retry_go126.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/retry_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/retry_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/session_ticket.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/session_ticket.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/session_ticket_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/session_ticket_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/tls_conn_utls.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/tls_conn_utls.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/token_generator.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/token_generator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/token_generator_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/token_generator_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/updatable_aead.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/updatable_aead.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handshake/updatable_aead_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handshake/updatable_aead_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/ackhandler/sent_packet_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/ackhandler/sent_packet_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/congestion.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/congestion.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/crypto_setup.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/crypto_setup.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/long_header_opener.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/long_header_opener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/mockgen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/mockgen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/short_header_opener.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/short_header_opener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mocks/short_header_sealer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mocks/short_header_sealer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/protocol/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/protocol/stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/qerr/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/qerr/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/qerr/errors_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/qerr/errors_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/qtls/cipher_suite_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/qtls/cipher_suite_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/log.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/ringbuffer/ringbuffer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/ringbuffer/ringbuffer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/rtt_stats.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/rtt_stats.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/rtt_stats_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/rtt_stats_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/streamframe_interval.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/streamframe_interval.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ack_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ack_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ack_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ack_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ack_frequency_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ack_frequency_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ack_frequency_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ack_frequency_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ack_range.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ack_range.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/connection_close_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/connection_close_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/connection_close_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/connection_close_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/crypto_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/crypto_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/crypto_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/crypto_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/data_blocked_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/data_blocked_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/data_blocked_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/data_blocked_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/datagram_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/datagram_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/datagram_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/datagram_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/extended_header.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/extended_header.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/extended_header_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/extended_header_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/frame_parser.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/frame_parser.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/frame_parser_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/frame_parser_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/frame_type.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/frame_type.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/handshake_done_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/handshake_done_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/handshake_done_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/handshake_done_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/header.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/header.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/header_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/header_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/immediate_ack_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/immediate_ack_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/immediate_ack_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/immediate_ack_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/log.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/log_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/log_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_data_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_data_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_data_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_data_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_stream_data_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_stream_data_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_stream_data_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_stream_data_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_streams_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_streams_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/max_streams_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/max_streams_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/new_connection_id_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/new_connection_id_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/new_connection_id_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/new_connection_id_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/new_token_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/new_token_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/new_token_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/new_token_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/path_challenge_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/path_challenge_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/path_challenge_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/path_challenge_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/path_response_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/path_response_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/path_response_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/path_response_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ping_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ping_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/ping_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/ping_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/reset_stream_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/reset_stream_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/reset_stream_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/reset_stream_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/retire_connection_id_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/retire_connection_id_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/retire_connection_id_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/retire_connection_id_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/short_header.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/short_header.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/short_header_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/short_header_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stop_sending_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stop_sending_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stop_sending_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stop_sending_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stream_data_blocked_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stream_data_blocked_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stream_data_blocked_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stream_data_blocked_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stream_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stream_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/stream_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/stream_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/streams_blocked_frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/streams_blocked_frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/streams_blocked_frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/streams_blocked_frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/test_helpers_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/test_helpers_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/transport_parameter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/transport_parameter_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/transport_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/transport_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/transport_parameters_chrome.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/transport_parameters_chrome.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/transport_parameters_chrome_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/transport_parameters_chrome_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/version_negotiation.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/version_negotiation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire/version_negotiation_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire/version_negotiation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/client/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/client/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/http09/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/http09/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/http09/http_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/http09/http_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/http09/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/http09/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/server/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/utils/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/interop/utils/logging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_ack_frame_source_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_ack_frame_source_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_conn_runner_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_conn_runner_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_frame_source_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_frame_source_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_mtu_discoverer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_mtu_discoverer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_packer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_packer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_packet_handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_packet_handler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_packetconn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_packetconn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_raw_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_raw_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_sealing_manager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_sealing_manager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_send_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_send_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_sender_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_sender_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_stream_control_frame_getter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_stream_control_frame_getter_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_stream_frame_getter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_stream_frame_getter_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_stream_sender_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_stream_sender_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock_unpacker_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mock_unpacker_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mockgen.go" beforeDir="false" afterPath="$PROJECT_DIR$/mockgen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module_rename.sh" beforeDir="false" afterPath="$PROJECT_DIR$/module_rename.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monotime/time.go" beforeDir="false" afterPath="$PROJECT_DIR$/monotime/time.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtu_discoverer.go" beforeDir="false" afterPath="$PROJECT_DIR$/mtu_discoverer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtu_discoverer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/mtu_discoverer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oss-fuzz.sh" beforeDir="false" afterPath="$PROJECT_DIR$/oss-fuzz.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_packer.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_packer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_packer_chaos.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_packer_chaos.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_packer_chaos_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_packer_chaos_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_packer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_packer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_unpacker.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_unpacker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packet_unpacker_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/packet_unpacker_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/path_manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/path_manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/path_manager_outgoing.go" beforeDir="false" afterPath="$PROJECT_DIR$/path_manager_outgoing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/path_manager_outgoing_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/path_manager_outgoing_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/path_manager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/path_manager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/benchmark_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/benchmark_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/event_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/event_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/frame.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/frame_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/frame_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/packet_header.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/packet_header.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/packet_header_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/packet_header_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/qlog_dir.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/qlog_dir.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/qlog_dir_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/qlog_dir_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlog/types_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlog/types_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlogwriter/jsontext/encoder_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlogwriter/jsontext/encoder_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlogwriter/trace.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlogwriter/trace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlogwriter/trace_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlogwriter/trace_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlogwriter/writer.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlogwriter/writer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qlogwriter/writer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/qlogwriter/writer_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quic_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/quic_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/receive_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/receive_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/receive_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/receive_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retransmission_queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/retransmission_queue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retransmission_queue_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/retransmission_queue_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_queue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_queue_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_queue_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/send_stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/server_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sni_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/sni_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stateless_reset.go" beforeDir="false" afterPath="$PROJECT_DIR$/stateless_reset.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stateless_reset_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/stateless_reset_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stream_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/stream_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map_incoming.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map_incoming.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map_incoming_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map_incoming_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map_outgoing.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map_outgoing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map_outgoing_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map_outgoing_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams_map_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/streams_map_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_buffers.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_buffers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_buffers_write.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_buffers_write.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_df_linux.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_df_linux.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_df_windows.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_df_windows.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_oob.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_oob.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_oob_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_oob_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys_conn_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/sys_conn_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testutils/events/event_recorder.go" beforeDir="false" afterPath="$PROJECT_DIR$/testutils/events/event_recorder.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testutils/events/event_recorder_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/testutils/events/event_recorder_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testutils/frames.go" beforeDir="false" afterPath="$PROJECT_DIR$/testutils/frames.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testutils/testutils.go" beforeDir="false" afterPath="$PROJECT_DIR$/testutils/testutils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/token_store.go" beforeDir="false" afterPath="$PROJECT_DIR$/token_store.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transport_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/transport_test.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="PowerShell File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3HJIbszpLFJLKhLXhgp5NkIwLy7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.GoLinterPluginOnboardingV2": "true",
+    "RunOnceActivity.GoLinterPluginStorageMigration": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.analysis.ui.options.defaults": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "chrome-parrot",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/Me"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-72a9cf600ed8-dfa3e7267ae0-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-253.32098.60" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-GO-253.32098.60" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17aaf85f-2641-439c-8156-06bfe5f88555" name="Changes" comment="" />
+      <created>1785579819314</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1785579819314</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

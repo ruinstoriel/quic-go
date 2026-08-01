@@ -11,9 +11,9 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/apernet/quic-go"
-	"github.com/apernet/quic-go/http3"
-	"github.com/apernet/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go"
+	"github.com/ruinstoriel/quic-go/http3"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 
 	"github.com/stretchr/testify/require"
 )

@@ -10,13 +10,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/qerr"
-	"github.com/apernet/quic-go/internal/utils"
-	"github.com/apernet/quic-go/internal/wire"
-	"github.com/apernet/quic-go/qlog"
-	"github.com/apernet/quic-go/qlogwriter"
-	"github.com/apernet/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/qerr"
+	"github.com/ruinstoriel/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/internal/wire"
+	"github.com/ruinstoriel/quic-go/qlog"
+	"github.com/ruinstoriel/quic-go/qlogwriter"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 )
 
 type quicVersionContextKey struct{}

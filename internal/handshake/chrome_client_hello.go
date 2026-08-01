@@ -30,14 +30,17 @@ func chromeQUICClientHelloSpec(alpn []string) *utls.ClientHelloSpec {
 		},
 		CompressionMethods: []byte{0x00},
 		Extensions: utls.ShuffleChromeTLSExtensions([]utls.TLSExtension{
-			&utls.SNIExtension{},
-			// No GREASE curve, unlike the TCP hello.
-			&utls.SupportedCurvesExtension{Curves: []utls.CurveID{
-				utls.X25519MLKEM768,
-				utls.X25519,
-				utls.CurveP256,
-				utls.CurveP384,
+			// TLS 1.3 only, again with no GREASE version.
+			&utls.SupportedVersionsExtension{Versions: []uint16{utls.VersionTLS13}},
+			// ALPS at the newer codepoint; uTLS's presets use the older one.
+			&utls.ApplicationSettingsExtensionNew{SupportedProtocols: alpn},
+			&utls.UtlsCompressCertExtension{Algorithms: []utls.CertCompressionAlgo{
+				utls.CertCompressionBrotli,
 			}},
+			// An ECH extension is always present: real when a config is available
+			// from DNS, GREASE otherwise. GREASE is right here, and is structurally
+			// indistinguishable from the real thing without decrypting it.
+			utls.BoringGREASEECH(),
 			&utls.SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []utls.SignatureScheme{
 				utls.ECDSAWithP256AndSHA256,
 				utls.PSSWithSHA256,
@@ -49,28 +52,27 @@ func chromeQUICClientHelloSpec(alpn []string) *utls.ClientHelloSpec {
 				utls.PKCS1WithSHA512,
 				utls.PKCS1WithSHA1,
 			}},
-			&utls.ALPNExtension{AlpnProtocols: alpn},
-			&utls.UtlsCompressCertExtension{Algorithms: []utls.CertCompressionAlgo{
-				utls.CertCompressionBrotli,
+			// Populated from quic-go's own marshalled parameters; see
+			// utlsQUICConn.SetTransportParameters.
+			&utls.QUICTransportParametersExtension{},
+			// No GREASE curve, unlike the TCP hello.
+			&utls.SupportedCurvesExtension{Curves: []utls.CurveID{
+				utls.X25519MLKEM768,
+				utls.X25519,
+				utls.CurveSECP256R1,
+				utls.CurveSECP384R1,
 			}},
-			// TLS 1.3 only, again with no GREASE version.
-			&utls.SupportedVersionsExtension{Versions: []uint16{utls.VersionTLS13}},
-			&utls.PSKKeyExchangeModesExtension{Modes: []uint8{utls.PskModeDHE}},
+			&utls.SNIExtension{},
+
+			&utls.ALPNExtension{AlpnProtocols: alpn},
+
 			// The ML-KEM share is what pushes the ClientHello past a single packet,
 			// giving the characteristic two Initial datagrams.
 			&utls.KeyShareExtension{KeyShares: []utls.KeyShare{
 				{Group: utls.X25519MLKEM768},
 				{Group: utls.X25519},
 			}},
-			// Populated from quic-go's own marshalled parameters; see
-			// utlsQUICConn.SetTransportParameters.
-			&utls.QUICTransportParametersExtension{},
-			// ALPS at the newer codepoint; uTLS's presets use the older one.
-			&utls.ApplicationSettingsExtensionNew{SupportedProtocols: alpn},
-			// An ECH extension is always present: real when a config is available
-			// from DNS, GREASE otherwise. GREASE is right here, and is structurally
-			// indistinguishable from the real thing without decrypting it.
-			utls.BoringGREASEECH(),
+			&utls.PSKKeyExchangeModesExtension{Modes: []uint8{utls.PskModeDHE}},
 		}),
 	}
 }

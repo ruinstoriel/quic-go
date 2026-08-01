@@ -3,8 +3,8 @@ package congestion
 import (
 	"time"
 
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/monotime"
 )
 
 type (

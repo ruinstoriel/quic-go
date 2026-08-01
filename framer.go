@@ -4,12 +4,12 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/apernet/quic-go/internal/ackhandler"
-	"github.com/apernet/quic-go/internal/monotime"
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/utils/ringbuffer"
-	"github.com/apernet/quic-go/internal/wire"
-	"github.com/apernet/quic-go/quicvarint"
+	"github.com/ruinstoriel/quic-go/internal/ackhandler"
+	"github.com/ruinstoriel/quic-go/internal/monotime"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/utils/ringbuffer"
+	"github.com/ruinstoriel/quic-go/internal/wire"
+	"github.com/ruinstoriel/quic-go/quicvarint"
 )
 
 const (
@@ -212,7 +212,7 @@ func (f *framer) appendControlFrames(
 // This is a hack.
 // It is easier to implement than propagating an error return value in QueueControlFrame.
 // The correct solution would be to queue frames with their respective structs.
-// See https://github.com/apernet/quic-go/issues/4271 for the queueing of stream-related control frames.
+// See https://github.com/ruinstoriel/quic-go/issues/4271 for the queueing of stream-related control frames.
 func (f *framer) QueuedTooManyControlFrames() bool {
 	return f.queuedTooManyControlFrames
 }

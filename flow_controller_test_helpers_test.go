@@ -1,8 +1,8 @@
 package quic
 
 import (
-	"github.com/apernet/quic-go/internal/protocol"
-	"github.com/apernet/quic-go/internal/utils"
+	"github.com/ruinstoriel/quic-go/internal/protocol"
+	"github.com/ruinstoriel/quic-go/internal/utils"
 )
 
 func newTestStreamFlowController(id protocol.StreamID) *streamFlowController {
